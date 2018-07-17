@@ -166,6 +166,22 @@ b13_pos = (740, 412)
 b14_pos = (740, 387)
 b15_pos = (720,400)
 
+b1_vel = (0,0)
+b2_vel = (0,0)
+b3_vel = (0,0)
+b4_vel = (0,0)
+b5_vel = (0,0)
+b6_vel = (0,0)
+b7_vel = (0,0)
+b8_vel = (0,0)
+b9_vel = (0,0)
+b10_vel = (0,0)
+b11_vel = (0,0)
+b12_vel = (0,0)
+b13_vel = (0,0)
+b14_vel = (0,0)
+b15_vel = (0,0)
+
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, 10) #1
@@ -208,7 +224,6 @@ while True:
     b1, b2, b3, b4, b5 = creating_balls()
 
     checking_collision(ball_pos,b2_pos)
-
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             ball_vel = move_control(ball_vel)        
