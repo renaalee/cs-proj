@@ -282,6 +282,11 @@ def all_pockets():
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     b = [x for x in L if in_pocket(x) == False]
 
+def timer():
+    """Creates a timer that runs throughout the game. """
+    clock = pygame.time.Clock()
+    return clock
+
 
 while True:
     window = pygame.display.set_mode(window_size)
@@ -299,6 +304,7 @@ while True:
     
     #one_collision(ball_pos, b1_pos)
     checking_collisions()
+    timer()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
