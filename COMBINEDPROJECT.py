@@ -239,8 +239,10 @@ def checking_collisions():
 def boundary(b_pos, b_vel, b_radius):
     if b_pos[0] + b_radius >= table_dims[2] or b_pos[0] - b_radius <= table_dims[0]:
         b_vel = [-b_vel[0], b_vel[1]]
-    if b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
+    elif b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
         b_vel = [b_vel[0], -b_vel[1]]
+    else:
+        reutrn False
 
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
