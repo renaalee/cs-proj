@@ -193,17 +193,17 @@ def creating_balls():
     b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
     b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, rad) #4
     b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
-    b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
-    b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
-    b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
-    b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
-    b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
-    b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
-    b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
-    b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
-    b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
-    b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
-    return b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
+    #b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
+    #b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
+    #b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
+    #b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
+    #b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
+    #b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
+    #b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
+    #b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
+    #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
+    #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
+    return b1, b2, b3, b4, b5
 
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
@@ -245,8 +245,6 @@ def boundary(b_pos, b_vel, b_radius):
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
     return b_pos, b_vel
-
-
 
 
 def update_balls():
