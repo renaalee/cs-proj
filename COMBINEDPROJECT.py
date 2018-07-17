@@ -238,7 +238,6 @@ def checking_collisions():
     
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    #V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
 
     for b in L[0:(len(L)-1)]:
         indexCount = 1
@@ -249,7 +248,7 @@ def checking_collisions():
             #print(check)
             if check == True:
                     C += [bCount] + [indexCount]
-                    print(C)
+                    #print(C)
                     return C
             indexCount += 1
         bCount += 1
