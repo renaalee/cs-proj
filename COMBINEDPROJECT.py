@@ -58,7 +58,7 @@ def draw_table():
    pygame.draw.rect(window, wood_color, [100, 100, 900, 600], 30) #draws the wooden edge of the table
   
 
-table_dims = [115, 115, 985, 685]
+table_dims = [110, 110, 990, 690]
 ball_pos = (550, 400)
 ball_vel = [0,0]
 ball_radius = 10
@@ -75,6 +75,7 @@ def update_control(surface_size, ball_pos, ball_vel, ball_radius):
     ball_pos = (ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1])
 
     return ball_pos, ball_vel
+
 
 def draw_control(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
@@ -150,7 +151,7 @@ def move_control(ball_vel):
 def ball(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
 
-b1_pos = (800,350)
+b1_pos = (800, 350)
 b2_pos = (800, 375)
 b3_pos = (800, 400)
 b4_pos = (800, 425)
@@ -164,7 +165,7 @@ b11_pos = (760, 400)
 b12_pos = (760, 425)
 b13_pos = (740, 412)
 b14_pos = (740, 387)
-b15_pos = (720,400)
+b15_pos = (720, 400)
 
 b1_vel = (0,0)
 b2_vel = (0,0)
@@ -200,24 +201,44 @@ def creating_balls():
     b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
     b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
     return b1, b2, b3, b4, b5, #b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
+rad = 10
+
+def creating_balls():
+    b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
+    b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, rad) #2
+    b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
+    b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, rad) #4
+    b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
+    #b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
+    #b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
+    #b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
+    #b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
+    #b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
+    #b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
+    #b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
+    #b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
+    #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
+    #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
+    return b1, b2, b3, b4, b5
 
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
     ans = math.hypot(a[0]-b[0], a[1]-b[1])
     if ans <= 20:
         print('COLLISION')      
-        return True
     else:
-        return False
         print('no collision')
-
+        return False
 
 def checking_collisions():
     """checks collisions between all objects"""
     C = []
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-    for balls in L[0:(len(L)-1)]:
-        for rest in L[1:]:
+    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    for b in L:
+        #if b == L[-1]:
+            #return C
+        #else:
+        for r in L[1:len(L)]:
             check = one_collision(balls, rest)
             if check == True:
                 C += [balls, rest]
@@ -242,6 +263,14 @@ def all_pockets():
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     for x in L[0:(len(L))]:
         in_pocket(x)
+            print(check)
+            #if check == True:
+                #C += [b] + [r]
+    print(C)
+    #return C
+
+def update_balls():
+    pass
             
 
 while True:
@@ -256,8 +285,10 @@ while True:
 
     b1, b2, b3, b4, b5 = creating_balls()
 
-    one_collision(ball_pos,b2_pos)
     all_pockets()
+    
+    #one_collision(ball_pos, b1_pos)
+    checking_collisions()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
