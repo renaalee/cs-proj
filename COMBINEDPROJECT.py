@@ -1,6 +1,8 @@
 #Combined Final Project
 #Karin, Rena, & Emily
 
+#hello everyone
+
 import pygame
 
 pygame.init()
