@@ -209,10 +209,10 @@ def one_collision(a, b):
     """checks if there is a collision between two balls"""
     ans = math.hypot(a[0]-b[0], a[1]-b[1])
     if ans <= 20:
-        print('COLLISION')      
+        #print('COLLISION')      
         return True
     else:
-        print('no collision')
+        #print('no collision')
         return False
 
 def checking_collisions():
@@ -231,10 +231,10 @@ def checking_collisions():
             #print(check)
             if check == True:
                     C += [bCount] + [indexCount]
-                    print(C)
-                    return C
+                    #print(C)
             indexCount += 1
         bCount += 1
+    return C
 
 def boundary(b_pos, b_vel, b_radius):
     if b_pos[0] + b_radius >= table_dims[2] or b_pos[0] - b_radius <= table_dims[0]:
@@ -248,23 +248,57 @@ def boundary(b_pos, b_vel, b_radius):
 
     return b_pos, b_vel
 
+boundary(b1_pos, b1_vel, rad)
+boundary(b2_pos, b2_vel, rad)
+boundary(b3_pos, b3_vel, rad)
+boundary(b4_pos, b4_vel, rad)
+boundary(b5_pos, b5_vel, rad)
 
-def update_balls():
+def update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel):
     lst = checking_collisions()
-    V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
     if 0 in lst:
-        ball_vel = [0,0]
+        ball_pos, ball_vel = stopc(ball_pos, ball_vel)
     if 1 in lst:
-        boundary(b1_pos, b1_vel, rad)
-        b1_vel = [1,1]
+        b1_pos, b1_vel = rxn1(b1_pos, b1_vel)
     if 2 in lst:
-        boundary(b2_pos, b2_vel, rad)
-        b2_vel = [2,2]
+        b2_pos, b2_vel = rxn2(b2_vel, b2_pos)
     if 3 in lst:
-        
-        b3_vel = []
-    pass
+        b3_pos, b3_vel = rxn3(b3_vel, b3_pos)
+    if 4 in lst:
+        b4_pos, b4_vel = rxn4(b4_vel, b4_pos)
+    if 5 in lst:
+        b5_pos, b5_vel = rxn5(b5_vel, b5_pos)
+    return ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
 
+def stopc(ball_pos, ball_vel):
+    ball_vel = [0,0]
+    ball_pos = [ball_pos[0] + ball_vel[0], ball_pos[1] + ball_vel[1]]
+    return ball_pos, ball_vel
+
+def rxn1(b1_pos, b1_vel):
+    b1_vel = [b1_vel[0]+1, b1_vel[1]+1]
+    b1_pos = [b1_pos[0] + b1_vel[0], b1_pos[1] + b1_vel[1]]
+    return b1_pos, b1_vel
+
+def rxn2(b2_vel, b2_pos):
+    b2_vel = [b2_vel[0]+2,b2_vel[1]+2]
+    b2_pos = [b2_pos[0] + b2_vel[0], b2_pos[1] + b2_vel[1]]
+    return b2_vel, b2_pos 
+
+def rxn3(b3_vel, b3_pos):
+    b3_vel = [b3_vel[0]+1, b3_vel[1]]
+    b3_pos = [b3_pos[0] + b3_vel[0], b3_pos[1] + b3_vel[1]]
+    return b3_vel, b3_pos
+
+def rxn4(b4_vel, b4_pos):
+    b4_vel = [b4_vel[0]+2, b4_vel[1]]
+    b3_pos = [b4_pos[0] + b4_vel[0], b4_pos[1] + b4_vel[1]]
+    return b4_vel, b4_pos
+
+def rxn5(b5_vel, b5_pos):
+    b5_vel = [b5_vel[0], b5_vel[1]+2]
+    b5_pos = [b5_pos[0] + b5_vel[0], b5_pos[1] + b5_vel[1]]
+    return b5_vel, b5_pos
 
 def in_pocket(a):
     """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
@@ -316,7 +350,7 @@ while True:
     clock.tick(60)
     timer()
 
-    ball_pos, ball_vel = update_control( ball_pos, ball_vel, ball_radius)
+    ball_pos, ball_vel = update_control(ball_pos, ball_vel, ball_radius)
     control = draw_control(window, ball_color, ball_pos, ball_radius)
 
     b1, b2, b3, b4, b5 = creating_balls()
@@ -324,7 +358,9 @@ while True:
     all_pockets()
     
     #one_collision(ball_pos, b1_pos)
-    checking_collisions()
+    #checking_collisions()
+
+    ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel = update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -337,3 +373,4 @@ while True:
     
 
     pygame.display.flip()
+ #CHANGE
