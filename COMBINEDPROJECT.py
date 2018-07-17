@@ -263,11 +263,15 @@ def all_pockets():
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     for x in L[0:(len(L))]:
         in_pocket(x)
+    for b in L[0:(len(L)-1)]:
+        for r in L[1:]:
+            check = one_collision(b, r)
+            L = L[2:]
             print(check)
-            #if check == True:
-                #C += [b] + [r]
+            if check == True:
+                C += [b] + [r]
     print(C)
-    #return C
+    return C
 
 def update_balls():
     pass
