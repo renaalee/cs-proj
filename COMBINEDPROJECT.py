@@ -186,24 +186,6 @@ b15_vel = [0,0]
 
 rad = 10
 
-def creating_balls():
-    b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, 10) #1
-    b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, 10) #2
-    b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, 10) #2
-    b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, 10) #4
-    b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, 10) #5
-    b6 = ball(window, pygame.Color(153, 255, 204), (780, 437), 10) #6
-    b7 = ball(window, pygame.Color(153, 255, 255), (780, 412), 10) #7
-    b8 = ball(window, pygame.Color(153, 204, 255), (780, 387), 10) #8
-    b9 = ball(window, pygame.Color(153, 153, 255), (780, 362), 10) #9
-    b10 = ball(window, pygame.Color(204, 153, 255), (760, 375), 10) #10
-    b11 = ball(window, pygame.Color(255, 153, 255), (760, 400), 10) #11
-    b12 = ball(window, pygame.Color(255, 153, 204), (760, 425), 10) #12
-    b13 = ball(window, pygame.Color(255, 204, 229), (740, 412), 10) #13
-    b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
-    b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
-    return b1, b2, b3, b4, b5, #b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
-
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
@@ -211,17 +193,17 @@ def creating_balls():
     b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
     b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, rad) #4
     b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
-    #b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
-    #b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
-    #b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
-    #b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
-    #b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
-    #b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
-    #b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
-    #b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
-    #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
-    #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
-    return b1, b2, b3, b4, b5
+    b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
+    b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
+    b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
+    b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
+    b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
+    b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
+    b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
+    b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
+    b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
+    b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
+    return b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
 
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
@@ -268,11 +250,21 @@ def boundary(b_pos, b_vel, b_radius):
 
 
 def update_balls():
+    lst = checking_collisions()
+    V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    if 0 in lst:
+        ball_vel = [0,0]
+    if 1 in lst:
+        b1_vel = [1,1]
+    if 2 in lst:
+        b2_vel = [2,2]
+    if 3 in lst:
+        b3_vel = []
     pass
-          
 
 
-def in_pocket(a):  
+def in_pocket(a):
+    """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
     if a[0] <= 140 and a[1] <= 140:
         return True
     elif a[0] <= 560 and a[0] >= 540 and a[1] <= 135:
@@ -289,11 +281,11 @@ def in_pocket(a):
         return False
 
 def all_pockets():
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-    for x in L[0:(len(L))]:
-        in_pocket(x)
+    """Takes a list of all the balls and checks to see if any are in a pocket.
+    If they are in a pocket, excluding the control ball, they are removed from the list. """
+    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    b = [x for x in L if in_pocket(x) == False]
 
-  
 
 while True:
     window = pygame.display.set_mode(window_size)
