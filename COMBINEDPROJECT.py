@@ -290,10 +290,22 @@ def all_pockets():
     b = [x for x in L if in_pocket(x) == False]
 
 
-def timer():
-    """Creates a timer that runs throughout the game. """
-    clock = pygame.time.Clock.get_time()
-    return clock
+#def timer():
+    """Creates a timer that runs throughout the game."""
+    clock = pygame.time.Clock()
+    font = pygame.font.Font(None, 30)
+    frame_count = 0
+    frame_rate = 60
+    total_seconds = frame_count  // frame_rate
+    
+    minutes = total_seconds // 60
+    seconds = total_seconds % 60
+    
+    output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
+    text = font.render(output_string, True, [0, 0, 0])
+    window.blit(text, [500, 50])
+    frame_count += 1
+    
 
 
 while True:
@@ -302,6 +314,7 @@ while True:
     table = draw_table()
 
     clock.tick(60)
+    timer()
 
     ball_pos, ball_vel = update_control( ball_pos, ball_vel, ball_radius)
     control = draw_control(window, ball_color, ball_pos, ball_radius)
@@ -312,7 +325,6 @@ while True:
     
     #one_collision(ball_pos, b1_pos)
     checking_collisions()
-    timer()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
