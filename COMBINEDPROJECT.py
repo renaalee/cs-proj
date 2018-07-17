@@ -204,10 +204,8 @@ def creating_balls():
     #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
     #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
     return b1, b2, b3, b4, b5
-<<<<<<< HEAD
-=======
 
->>>>>>> c44c2dcead1a49d2bbd10f3a37d4c25c99687644
+
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
     ans = math.hypot(a[0]-b[0], a[1]-b[1])
