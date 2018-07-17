@@ -57,8 +57,8 @@ def draw_table():
    pygame.draw.rect(window, wood_color, [100, 100, 900, 600], 30) #draws the wooden edge of the table
   
 
-
-ball_pos = (100,100)
+table_dims = [110, 110, 990, 690]
+ball_pos = (550, 400)
 ball_vel = [0,0]
 ball_radius = 10
 ball_color = pygame.Color(127,127,255)
@@ -66,9 +66,9 @@ ball_color = pygame.Color(127,127,255)
 clock = pygame.time.Clock()
 
 def update_control(surface_size, ball_pos, ball_vel, ball_radius):
-    if ball_pos[0] + ball_radius >= surface_size[0] or ball_pos[0] - ball_radius <= 0:
+    if ball_pos[0] + ball_radius >= table_dims[2] or ball_pos[0] - ball_radius <= table_dims[0]:
         ball_vel = (-ball_vel[0], ball_vel[1])
-    if ball_pos[1] + ball_radius >= surface_size[1] or ball_pos[1] - ball_radius <= 0:
+    if ball_pos[1] + ball_radius >= table_dims[3] or ball_pos[1] - ball_radius <= table_dims[1]:
         ball_vel = (ball_vel[0], -ball_vel[1])
 
     ball_pos = (ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1])
