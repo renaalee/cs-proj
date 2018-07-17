@@ -260,7 +260,7 @@ def update_balls():
           
 
 
-def in_pocket(a):  
+def in_pocket(a):
     """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
     if a[0] <= 140 and a[1] <= 140:
         return True
@@ -282,7 +282,7 @@ def all_pockets():
     If they are in a pocket, excluding the control ball, they are removed from the list. """
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     b = [x for x in L if in_pocket(x) == False]
-  
+
 
 while True:
     window = pygame.display.set_mode(window_size)
