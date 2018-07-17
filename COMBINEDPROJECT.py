@@ -67,7 +67,7 @@ ball_color = pygame.Color(127,127,255)
 
 clock = pygame.time.Clock()
 
-def update_control(surface_size, ball_pos, ball_vel, ball_radius):
+def update_control(ball_pos, ball_vel, ball_radius):
     if ball_pos[0] + ball_radius >= table_dims[2] or ball_pos[0] - ball_radius <= table_dims[0]:
         ball_vel = [-ball_vel[0], ball_vel[1]]
     if ball_pos[1] + ball_radius >= table_dims[3] or ball_pos[1] - ball_radius <= table_dims[1]:
@@ -254,6 +254,19 @@ def checking_collisions():
             indexCount += 1
         bCount += 1
 
+def boundary(b_pos, b_vel, b_radius):
+    if b_pos[0] + b_radius >= table_dims[2] or b_pos[0] - b_radius <= table_dims[0]:
+        b_vel = [-b_vel[0], b_vel[1]]
+    if b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
+        b_vel = [b_vel[0], -b_vel[1]]
+
+    b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
+
+    return b_pos, b_vel
+
+
+
+
 def update_balls():
     pass
           
@@ -289,7 +302,7 @@ while True:
 
     clock.tick(60)
 
-    ball_pos, ball_vel = update_control(window_size, ball_pos, ball_vel, ball_radius)
+    ball_pos, ball_vel = update_control( ball_pos, ball_vel, ball_radius)
     control = draw_control(window, ball_color, ball_pos, ball_radius)
 
     b1, b2, b3, b4, b5 = creating_balls()
