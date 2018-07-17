@@ -261,6 +261,7 @@ def update_balls():
 
 
 def in_pocket(a):  
+    """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
     if a[0] <= 140 and a[1] <= 140:
         return True
     elif a[0] <= 560 and a[0] >= 540 and a[1] <= 135:
@@ -277,10 +278,10 @@ def in_pocket(a):
         return False
 
 def all_pockets():
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-    for x in L[0:(len(L))]:
-        in_pocket(x)
-
+    """Takes a list of all the balls and checks to see if any are in a pocket.
+    If they are in a pocket, excluding the control ball, they are removed from the list. """
+    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    b = [x for x in L if in_pocket(x) == False]
   
 
 while True:
