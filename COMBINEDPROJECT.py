@@ -242,11 +242,13 @@ def update_balls():
     if 0 in lst:
         ball_vel = [0,0]
     if 1 in lst:
-        boundary(table_dims, b1_pos, b1_vel, rad)
+        boundary(b1_pos, b1_vel, rad)
         b1_vel = [1,1]
     if 2 in lst:
+        boundary(b2_pos, b2_vel, rad)
         b2_vel = [2,2]
     if 3 in lst:
+        
         b3_vel = []
     pass
 
