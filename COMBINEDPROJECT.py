@@ -217,10 +217,10 @@ def one_collision(a, b):
 
 def checking_collisions():
     """checks collisions between all objects
-    takes no input, returns velocities of balls that have been involved in a collision"""
+    takes no input, returns list of velocities of balls that have been involved in a collision"""
+    
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
 
     for b in L[0:(len(L)-1)]:
         indexCount = 1
@@ -230,13 +230,11 @@ def checking_collisions():
             check = one_collision(b, r)
             #print(check)
             if check == True:
-                    onex = V[bCount]
-                    twox = V[indexCount]
-                    #print(onex)
-                    #print(twox)
-                    return V[bCount], V[indexCount]
-            bCount += 1
+                    C += [bCount] + [indexCount]
+                    #print(C)
+                    return C
             indexCount += 1
+        bCount += 1
 
 def update_balls():
     lst = checking_collisions()
@@ -252,7 +250,8 @@ def update_balls():
     pass
 
 
-def in_pocket(a):  
+def in_pocket(a):
+    """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
     if a[0] <= 140 and a[1] <= 140:
         return True
     elif a[0] <= 560 and a[0] >= 540 and a[1] <= 135:
@@ -269,11 +268,11 @@ def in_pocket(a):
         return False
 
 def all_pockets():
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-    for x in L[0:(len(L))]:
-        in_pocket(x)
+    """Takes a list of all the balls and checks to see if any are in a pocket.
+    If they are in a pocket, excluding the control ball, they are removed from the list. """
+    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    b = [x for x in L if in_pocket(x) == False]
 
-  
 
 while True:
     window = pygame.display.set_mode(window_size)
