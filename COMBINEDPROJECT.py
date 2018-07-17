@@ -2,6 +2,7 @@
 #Karin, Rena, & Emily
 
 import pygame
+import math
 
 pygame.init()
 
@@ -82,7 +83,7 @@ def draw_control(surface, ball_color, ball_pos, ball_radius):
 def brake_control(ball_vel):
     """brakes control ball"""
     if ball_vel == (0,0):
-        return
+        return ball_vel
     elif ball_vel[0]==0:
         if ball_vel[1] < 0:
             ball_vel = (ball_vel[0], ball_vel[1]+1)
@@ -149,22 +150,48 @@ def move_control(ball_vel):
 def ball(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
 
+b1_pos = (800,350)
+b2_pos = (800, 375)
+b3_pos = (800, 400)
+b4_pos = (800, 425)
+b5_pos = (800, 450)
+b6_pos = (780, 437)
+b7_pos = (780, 412)
+b8_pos = (780, 387)
+b9_pos = (780, 362)
+b10_pos = (760, 375)
+b11_pos = (760, 400)
+b12_pos = (760, 425)
+b13_pos = (740, 412)
+b14_pos = (740, 387)
+b15_pos = (720,400)
+
+
 def creating_balls():
-    b1 = ball(window, pygame.Color(255, 153, 153), (800, 350), 10) #1
-    b2 = ball(window, pygame.Color(255, 153, 153), (800, 375), 10) #2
-    b3 = ball(window, pygame.Color(255, 255, 153), (800, 400), 10) #2
-    b4 = ball(window, pygame.Color(204, 255, 153), (800, 425), 10) #4
-    b5 = ball(window, pygame.Color(153, 255, 153), (800, 450), 10) #5
-    b6 = ball(window, pygame.Color(153, 255, 204), (780, 437), 10) #6
-    b7 = ball(window, pygame.Color(153, 255, 255), (780, 412), 10) #7
-    b8 = ball(window, pygame.Color(153, 204, 255), (780, 387), 10) #8
-    b9 = ball(window, pygame.Color(153, 153, 255), (780, 362), 10) #9
-    b10 = ball(window, pygame.Color(204, 153, 255), (760, 375), 10) #10
-    b11 = ball(window, pygame.Color(255, 153, 255), (760, 400), 10) #11
-    b12 = ball(window, pygame.Color(255, 153, 204), (760, 425), 10) #12
-    b13 = ball(window, pygame.Color(255, 204, 229), (740, 412), 10) #13
-    b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
-    b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
+    b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, 10) #1
+    b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, 10) #2
+    b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, 10) #2
+    b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, 10) #4
+    b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, 10) #5
+    #b6 = ball(window, pygame.Color(153, 255, 204), (780, 437), 10) #6
+    #b7 = ball(window, pygame.Color(153, 255, 255), (780, 412), 10) #7
+    #b8 = ball(window, pygame.Color(153, 204, 255), (780, 387), 10) #8
+    #b9 = ball(window, pygame.Color(153, 153, 255), (780, 362), 10) #9
+    #b10 = ball(window, pygame.Color(204, 153, 255), (760, 375), 10) #10
+    #b11 = ball(window, pygame.Color(255, 153, 255), (760, 400), 10) #11
+    #b12 = ball(window, pygame.Color(255, 153, 204), (760, 425), 10) #12
+    #b13 = ball(window, pygame.Color(255, 204, 229), (740, 412), 10) #13
+    #b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
+    #b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
+    return b1, b2, b3, b4, b5
+
+def checking_collision(b1, b2):
+    """checks if there is a collision between two balls"""
+    ans = math.hypot(ball_pos[0]-b2_pos[0], ball_pos[1]-b2_pos[1])
+    if ans <= 20:
+        print('COLLISION')
+    else:
+        print('no collision')
 
 
 
@@ -178,7 +205,9 @@ while True:
     ball_pos, ball_vel = update_control(window_size, ball_pos, ball_vel, ball_radius)
     draw_control(window, ball_color, ball_pos, ball_radius)
 
-    creating_balls()
+    b1, b2, b3, b4, b5 = creating_balls()
+
+    checking_collision(ball_pos,b2_pos)
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
