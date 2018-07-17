@@ -1,5 +1,4 @@
-# balls
-
+# drawn balls at starting positions, no collision behaviors yet.
 
 import pygame
 
