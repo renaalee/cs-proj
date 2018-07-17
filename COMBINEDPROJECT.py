@@ -242,7 +242,7 @@ def boundary(b_pos, b_vel, b_radius):
     elif b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
         b_vel = [b_vel[0], -b_vel[1]]
     else:
-        reutrn False
+        return False
 
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
