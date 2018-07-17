@@ -184,6 +184,7 @@ b13_vel = [0,0]
 b14_vel = [0,0]
 b15_vel = [0,0]
 
+rad = 10
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, 10) #1
@@ -202,7 +203,7 @@ def creating_balls():
     b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
     b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
     return b1, b2, b3, b4, b5, #b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
-rad = 10
+
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
