@@ -193,26 +193,25 @@ def creating_balls():
     b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
     b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, rad) #4
     b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
-    b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
-    b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
-    b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
-    b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
-    b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
-    b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
-    b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
-    b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
-    b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
-    b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
-    return b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
-
+    #b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
+    #b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
+    #b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
+    #b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
+    #b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
+    #b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
+    #b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
+    #b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
+    #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
+    #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
+    return b1, b2, b3, b4, b5
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
     ans = math.hypot(a[0]-b[0], a[1]-b[1])
     if ans <= 20:
-        print('COLLISION')      
+        #print('COLLISION')      
         return True
     else:
-        print('no collision')
+        #print('no collision')
         return False
 
 def checking_collisions():
@@ -231,10 +230,10 @@ def checking_collisions():
             #print(check)
             if check == True:
                     C += [bCount] + [indexCount]
-                    print(C)
-                    return C
+                    #print(C)
             indexCount += 1
         bCount += 1
+    return C
 
 def boundary(b_pos, b_vel, b_radius):
     if b_pos[0] + b_radius >= table_dims[2] or b_pos[0] - b_radius <= table_dims[0]:
@@ -246,24 +245,26 @@ def boundary(b_pos, b_vel, b_radius):
 
     return b_pos, b_vel
 
-
-
+boundary(b1_pos, b1_vel, rad)
+boundary(b2_pos, b2_vel, rad)
+boundary(b3_pos, b3_vel, rad)
+boundary(b4_pos, b4_vel, rad)
+boundary(b5_pos, b5_vel, rad)
 
 def update_balls():
     lst = checking_collisions()
-    V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
     if 0 in lst:
         ball_vel = [0,0]
     if 1 in lst:
-        boundary(b1_pos, b1_vel, rad)
-        b1_vel = [1,1]
+        b1_vel = [b1_vel[0]+1, b1_vel[1]+1] 
     if 2 in lst:
-        boundary(b2_pos, b2_vel, rad)
-        b2_vel = [2,2]
+        b2_vel = [b2_vel[0]+2,b2_vel[1]+2]
     if 3 in lst:
-        
-        b3_vel = []
-    pass
+        b3_vel = [b3_vel[0]+1, b3_vel[1]]
+    if 4 in lst:
+        b4_vel = [b4_vel[0]+2, b4_vel[1]]
+    if 5 in lst:
+        b5_vel = [b5_vel[0], b5_vel[1]+2]
 
 
 def in_pocket(a):
@@ -305,7 +306,9 @@ while True:
     all_pockets()
     
     #one_collision(ball_pos, b1_pos)
-    checking_collisions()
+    #checking_collisions()
+
+    update_balls()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
