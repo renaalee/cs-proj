@@ -182,23 +182,24 @@ b13_vel = (0,0)
 b14_vel = (0,0)
 b15_vel = (0,0)
 
+rad = 10
 
 def creating_balls():
-    b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, 10) #1
-    b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, 10) #2
-    b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, 10) #2
-    b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, 10) #4
-    b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, 10) #5
-    #b6 = ball(window, pygame.Color(153, 255, 204), (780, 437), 10) #6
-    #b7 = ball(window, pygame.Color(153, 255, 255), (780, 412), 10) #7
-    #b8 = ball(window, pygame.Color(153, 204, 255), (780, 387), 10) #8
-    #b9 = ball(window, pygame.Color(153, 153, 255), (780, 362), 10) #9
-    #b10 = ball(window, pygame.Color(204, 153, 255), (760, 375), 10) #10
-    #b11 = ball(window, pygame.Color(255, 153, 255), (760, 400), 10) #11
-    #b12 = ball(window, pygame.Color(255, 153, 204), (760, 425), 10) #12
-    #b13 = ball(window, pygame.Color(255, 204, 229), (740, 412), 10) #13
-    #b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
-    #b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
+    b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
+    b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, rad) #2
+    b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
+    b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, rad) #4
+    b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
+    #b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
+    #b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
+    #b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
+    #b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
+    #b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
+    #b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
+    #b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
+    #b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
+    #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
+    #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
     return b1, b2, b3, b4, b5
 
 def one_collision(a, b):
@@ -212,8 +213,12 @@ def one_collision(a, b):
 def checking_collisions():
     """checks collisions between all objects"""
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, ]
+        
 
-
+def update_ball():
+    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    for x in L:
+        pass
 
 while True:
     window = pygame.display.set_mode(window_size)
