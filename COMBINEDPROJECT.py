@@ -76,6 +76,7 @@ def update_control(surface_size, ball_pos, ball_vel, ball_radius):
 
     return ball_pos, ball_vel
 
+
 def draw_control(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
   
@@ -150,7 +151,7 @@ def move_control(ball_vel):
 def ball(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
 
-b1_pos = (800,350)
+b1_pos = (800, 350)
 b2_pos = (800, 375)
 b3_pos = (800, 400)
 b4_pos = (800, 425)
@@ -164,7 +165,7 @@ b11_pos = (760, 400)
 b12_pos = (760, 425)
 b13_pos = (740, 412)
 b14_pos = (740, 387)
-b15_pos = (720,400)
+b15_pos = (720, 400)
 
 b1_vel = (0,0)
 b2_vel = (0,0)
@@ -209,11 +210,26 @@ def one_collision(a, b):
         print('COLLISION')      
     else:
         print('no collision')
+        return False
 
 def checking_collisions():
     """checks collisions between all objects"""
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, ]
-        
+    C = []
+    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    for b in L:
+        #if b == L[-1]:
+            #return C
+        #else:
+        for r in L[1:len(L)]:
+            check = one_collision(balls, rest)
+            print(check)
+            #if check == True:
+                #C += [b] + [r]
+    print(C)
+    #return C
+
+def update_balls():
+            
 
 while True:
     window = pygame.display.set_mode(window_size)
@@ -227,7 +243,8 @@ while True:
 
     b1, b2, b3, b4, b5 = creating_balls()
 
-    one_collision(ball_pos,b2_pos)
+    #one_collision(ball_pos, b1_pos)
+    checking_collisions()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
