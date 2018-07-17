@@ -184,6 +184,7 @@ b13_vel = [0,0]
 b14_vel = [0,0]
 b15_vel = [0,0]
 
+rad = 10
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, 10) #1
@@ -202,7 +203,7 @@ def creating_balls():
     b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
     b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
     return b1, b2, b3, b4, b5, #b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
-rad = 10
+
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
@@ -234,10 +235,10 @@ def one_collision(a, b):
 
 def checking_collisions():
     """checks collisions between all objects
-    takes no input, returns velocities of balls that have been involved in a collision"""
+    takes no input, returns list of velocities of balls that have been involved in a collision"""
+    
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
 
     for b in L[0:(len(L)-1)]:
         indexCount = 1
@@ -247,13 +248,11 @@ def checking_collisions():
             check = one_collision(b, r)
             #print(check)
             if check == True:
-                    onex = V[bCount]
-                    twox = V[indexCount]
-                    #print(onex)
-                    #print(twox)
-                    return V[bCount], V[indexCount]
-            bCount += 1
+                    C += [bCount] + [indexCount]
+                    #print(C)
+                    return C
             indexCount += 1
+        bCount += 1
 
 def update_balls():
     pass
