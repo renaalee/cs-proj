@@ -242,7 +242,7 @@ def boundary(b_pos, b_vel, b_radius):
     elif b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
         b_vel = [b_vel[0], -b_vel[1]]
     else:
-        reutrn False
+        return False
 
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
@@ -289,9 +289,10 @@ def all_pockets():
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     b = [x for x in L if in_pocket(x) == False]
 
+
 def timer():
     """Creates a timer that runs throughout the game. """
-    clock = pygame.time.Clock()
+    clock = pygame.time.Clock.get_time()
     return clock
 
 
