@@ -229,17 +229,15 @@ def checking_collisions():
     """checks collisions between all objects"""
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    for b in L:
-        #if b == L[-1]:
-            #return C
-        #else:
-        for r in L[1:len(L)]:
-            check = one_collision(balls, rest)
+    for b in L[0:(len(L)-1)]:
+        for r in L[1:]:
+            check = one_collision(b, r)
+            L = L[2:]
             print(check)
-            #if check == True:
-                #C += [b] + [r]
+            if check == True:
+                C += [b] + [r]
     print(C)
-    #return C
+    return C
 
             
 
