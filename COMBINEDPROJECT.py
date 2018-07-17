@@ -232,7 +232,8 @@ def one_collision(a, b):
         return False
 
 def checking_collisions():
-    """checks collisions between all objects"""
+    """checks collisions between all objects
+    takes no input, returns velocities of balls that have been involved in a collision"""
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
     V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
@@ -247,14 +248,11 @@ def checking_collisions():
             if check == True:
                     onex = V[bCount]
                     twox = V[indexCount]
-                    print(onex)
-                    print(twox)
+                    #print(onex)
+                    #print(twox)
                     return V[bCount], V[indexCount]
             bCount += 1
             indexCount += 1
-                #C += [b] + [r]
-            #print(C)
-    print(V)    #return C
 
 
 def in_pocket(a):  
