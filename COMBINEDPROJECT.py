@@ -201,13 +201,17 @@ def creating_balls():
     #b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
     return b1, b2, b3, b4, b5
 
-def checking_collision(b1, b2):
+def one_collision(a, b):
     """checks if there is a collision between two balls"""
-    ans = math.hypot(ball_pos[0]-b2_pos[0], ball_pos[1]-b2_pos[1])
+    ans = math.hypot(a[0]-b[0], a[1]-b[1])
     if ans <= 20:
-        print('COLLISION')
+        print('COLLISION')      
     else:
         print('no collision')
+
+def checking_collisions():
+    """checks collisions between all objects"""
+    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, ]
 
 
 
@@ -223,7 +227,8 @@ while True:
 
     b1, b2, b3, b4, b5 = creating_balls()
 
-    checking_collision(ball_pos,b2_pos)
+    one_collision(ball_pos,b2_pos)
+
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             ball_vel = move_control(ball_vel)        
