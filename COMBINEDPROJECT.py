@@ -256,6 +256,10 @@ def checking_collisions():
             #print(C)
     print(V)    #return C
 
+def update_balls():
+    pass
+          
+
 
 def in_pocket(a):  
     if a[0] <= 140 and a[1] <= 140:
@@ -276,10 +280,7 @@ def all_pockets():
     for x in L[0:(len(L))]:
         in_pocket(x)
 
-
-def update_balls():
-    pass
-            
+  
 
 while True:
     window = pygame.display.set_mode(window_size)
