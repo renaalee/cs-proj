@@ -204,6 +204,10 @@ def creating_balls():
     #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
     #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
     return b1, b2, b3, b4, b5
+<<<<<<< HEAD
+=======
+
+>>>>>>> c44c2dcead1a49d2bbd10f3a37d4c25c99687644
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
     ans = math.hypot(a[0]-b[0], a[1]-b[1])
@@ -238,8 +242,10 @@ def checking_collisions():
 def boundary(b_pos, b_vel, b_radius):
     if b_pos[0] + b_radius >= table_dims[2] or b_pos[0] - b_radius <= table_dims[0]:
         b_vel = [-b_vel[0], b_vel[1]]
-    if b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
+    elif b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
         b_vel = [b_vel[0], -b_vel[1]]
+    else:
+        reutrn False
 
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
@@ -289,6 +295,11 @@ def all_pockets():
     If they are in a pocket, excluding the control ball, they are removed from the list. """
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     b = [x for x in L if in_pocket(x) == False]
+
+def timer():
+    """Creates a timer that runs throughout the game. """
+    clock = pygame.time.Clock()
+    return clock
 
 
 while True:
