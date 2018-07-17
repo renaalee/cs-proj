@@ -215,11 +215,6 @@ def checking_collisions():
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, ]
         
 
-def update_ball():
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    for x in L:
-        pass
-
 while True:
     window = pygame.display.set_mode(window_size)
     window.fill(window_color)
