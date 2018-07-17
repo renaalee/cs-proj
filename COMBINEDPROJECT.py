@@ -206,14 +206,23 @@ def one_collision(a, b):
     ans = math.hypot(a[0]-b[0], a[1]-b[1])
     if ans <= 20:
         print('COLLISION')      
+        return True
     else:
+        return False
         print('no collision')
+
 
 def checking_collisions():
     """checks collisions between all objects"""
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, ]
-
-
+    C = []
+    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    for balls in L[0:(len(L)-1)]:
+        for rest in L[1:]:
+            check = one_collision(balls, rest)
+            if check == True:
+                C += [balls, rest]
+    return C
+            
 
 while True:
     window = pygame.display.set_mode(window_size)
