@@ -57,7 +57,7 @@ def draw_table():
    pygame.draw.rect(window, wood_color, [100, 100, 900, 600], 30) #draws the wooden edge of the table
   
 
-table_dims = [110, 110, 990, 690]
+table_dims = [115, 115, 985, 685]
 ball_pos = (550, 400)
 ball_vel = [0,0]
 ball_radius = 10
@@ -166,7 +166,19 @@ def creating_balls():
     b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
     b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
 
-
+def in_pocket(ball_pos):  
+    if ball_pos[0] <= 140 and ball_pos[1] <= 140:
+        print("Goal!")
+    elif ball_pos[0] >= 560 and ball_pos[0] <= 580 and ball_pos[1] <= 135:
+        print("Goal!")
+    elif ball_pos[0] >= 980 and ball_pos [1] <= 120:
+        print("Goal!")
+    elif ball_pos[0] <= 140 and ball_pos[1] >= 660:
+        print("Goal!")
+    elif ball_pos[0] >= 540 and ball_pos[0] <= 560 and ball_pos[1] >= 665:
+        print("Goal!")
+    elif ball_pos[0] >= 960 and ball_pos[1] >= 660:
+        print("Goal!")
 
 while True:
     window = pygame.display.set_mode(window_size)
