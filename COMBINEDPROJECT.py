@@ -67,7 +67,7 @@ ball_color = pygame.Color(127,127,255)
 
 clock = pygame.time.Clock()
 
-def update_control(surface_size, ball_pos, ball_vel, ball_radius):
+def update_control(ball_pos, ball_vel, ball_radius):
     if ball_pos[0] + ball_radius >= table_dims[2] or ball_pos[0] - ball_radius <= table_dims[0]:
         ball_vel = [-ball_vel[0], ball_vel[1]]
     if ball_pos[1] + ball_radius >= table_dims[3] or ball_pos[1] - ball_radius <= table_dims[1]:
@@ -186,24 +186,6 @@ b15_vel = [0,0]
 
 rad = 10
 
-def creating_balls():
-    b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, 10) #1
-    b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, 10) #2
-    b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, 10) #2
-    b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, 10) #4
-    b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, 10) #5
-    b6 = ball(window, pygame.Color(153, 255, 204), (780, 437), 10) #6
-    b7 = ball(window, pygame.Color(153, 255, 255), (780, 412), 10) #7
-    b8 = ball(window, pygame.Color(153, 204, 255), (780, 387), 10) #8
-    b9 = ball(window, pygame.Color(153, 153, 255), (780, 362), 10) #9
-    b10 = ball(window, pygame.Color(204, 153, 255), (760, 375), 10) #10
-    b11 = ball(window, pygame.Color(255, 153, 255), (760, 400), 10) #11
-    b12 = ball(window, pygame.Color(255, 153, 204), (760, 425), 10) #12
-    b13 = ball(window, pygame.Color(255, 204, 229), (740, 412), 10) #13
-    b14 = ball(window, pygame.Color(229, 204, 255), (740, 387), 10) #14
-    b15 = ball(window, pygame.Color(204, 229, 255), (720, 400), 10) #15
-    return b1, b2, b3, b4, b5, #b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
-
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
@@ -240,23 +222,48 @@ def checking_collisions():
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
 
+    bCount = 0
     for b in L[0:(len(L)-1)]:
         indexCount = 1
-        bCount = 0
         for r in L[1:]:
             L = L[2:]
             check = one_collision(b, r)
             #print(check)
             if check == True:
                     C += [bCount] + [indexCount]
-                    #print(C)
+                    print(C)
                     return C
             indexCount += 1
         bCount += 1
 
+def boundary(b_pos, b_vel, b_radius):
+    if b_pos[0] + b_radius >= table_dims[2] or b_pos[0] - b_radius <= table_dims[0]:
+        b_vel = [-b_vel[0], b_vel[1]]
+    elif b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
+        b_vel = [b_vel[0], -b_vel[1]]
+    else:
+        reutrn False
+
+    b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
+
+    return b_pos, b_vel
+
+
 def update_balls():
+    lst = checking_collisions()
+    V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    if 0 in lst:
+        ball_vel = [0,0]
+    if 1 in lst:
+        boundary(b1_pos, b1_vel, rad)
+        b1_vel = [1,1]
+    if 2 in lst:
+        boundary(b2_pos, b2_vel, rad)
+        b2_vel = [2,2]
+    if 3 in lst:
+        
+        b3_vel = []
     pass
-          
 
 
 def in_pocket(a):
@@ -295,7 +302,7 @@ while True:
 
     clock.tick(60)
 
-    ball_pos, ball_vel = update_control(window_size, ball_pos, ball_vel, ball_radius)
+    ball_pos, ball_vel = update_control( ball_pos, ball_vel, ball_radius)
     control = draw_control(window, ball_color, ball_pos, ball_radius)
 
     b1, b2, b3, b4, b5 = creating_balls()
