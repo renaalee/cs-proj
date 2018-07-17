@@ -60,7 +60,7 @@ def draw_table():
   
 
 table_dims = [110, 110, 990, 690]
-ball_pos = (550, 400)
+ball_pos = [550, 400]
 ball_vel = [0,0]
 ball_radius = 10
 ball_color = pygame.Color(127,127,255)
@@ -69,11 +69,11 @@ clock = pygame.time.Clock()
 
 def update_control(surface_size, ball_pos, ball_vel, ball_radius):
     if ball_pos[0] + ball_radius >= table_dims[2] or ball_pos[0] - ball_radius <= table_dims[0]:
-        ball_vel = (-ball_vel[0], ball_vel[1])
+        ball_vel = [-ball_vel[0], ball_vel[1]]
     if ball_pos[1] + ball_radius >= table_dims[3] or ball_pos[1] - ball_radius <= table_dims[1]:
-        ball_vel = (ball_vel[0], -ball_vel[1])
+        ball_vel = [ball_vel[0], -ball_vel[1]]
 
-    ball_pos = (ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1])
+    ball_pos = [ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1]]
 
     return ball_pos, ball_vel
 
@@ -84,64 +84,64 @@ def draw_control(surface, ball_color, ball_pos, ball_radius):
 
 def brake_control(ball_vel):
     """brakes control ball"""
-    if ball_vel == (0,0):
+    if ball_vel == [0,0]:
         return ball_vel
     elif ball_vel[0]==0:
         if ball_vel[1] < 0:
-            ball_vel = (ball_vel[0], ball_vel[1]+1)
+            ball_vel = [ball_vel[0], ball_vel[1]+1]
         elif ball_vel[1] > 0:
-            ball_vel = (ball_vel[0], ball_vel[1]-1)
+            ball_vel = [ball_vel[0], ball_vel[1]-1]
     elif ball_vel[1]==0:
         if ball_vel[0] <0:
-            ball_vel = (ball_vel[0]+1, ball_vel[1])
+            ball_vel = [ball_vel[0]+1, ball_vel[1]]
         elif ball_vel[0]>0:
-            ball_vel = (ball_vel[0]-1, ball_vel[1])
+            ball_vel = [ball_vel[0]-1, ball_vel[1]]
     else:
         if ball_vel[0] > 0 and ball_vel[1] > 0:
-            ball_vel = (ball_vel[0]-1, ball_vel[1]-1)
+            ball_vel = [ball_vel[0]-1, ball_vel[1]-1]
         if ball_vel[0] < 0 and ball_vel[1] < 0:
-            ball_vel = (ball_vel[0]+1, ball_vel[1]+1)
+            ball_vel = [ball_vel[0]+1, ball_vel[1]+1]
         if ball_vel[0] > 0 and ball_vel[1] < 0:
-            ball_vel = (ball_vel[0]-1, ball_vel[1]+1)
+            ball_vel = [ball_vel[0]-1, ball_vel[1]+1]
         if ball_vel[0] < 0 and ball_vel[1] > 0:
-            ball_vel = (ball_vel[0]+1, ball_vel[1]-1)
+            ball_vel = [ball_vel[0]+1, ball_vel[1]-1]
     return ball_vel
 
 def shoot_control(ball_vel):
     """shoots control ball"""
-    if ball_vel == (0,0):
+    if ball_vel == [0,0]:
         return ball_vel
     elif ball_vel[0]==0:
         if ball_vel[1] < 0:
-            ball_vel = (ball_vel[0], ball_vel[1]-2)
+            ball_vel = [ball_vel[0], ball_vel[1]-2]
         elif ball_vel[1] > 0:
-            ball_vel = (ball_vel[0], ball_vel[1]+2)
+            ball_vel = [ball_vel[0], ball_vel[1]+2]
     elif ball_vel[1]==0:
         if ball_vel[0] <0:
-            ball_vel = (ball_vel[0]-2, ball_vel[1])
+            ball_vel = [ball_vel[0]-2, ball_vel[1]]
         elif ball_vel[0]>0:
-            ball_vel = (ball_vel[0]+2, ball_vel[1])
+            ball_vel = [ball_vel[0]+2, ball_vel[1]]
     else:
         if ball_vel[0] > 0 and ball_vel[1] > 0:
-            ball_vel = (ball_vel[0]+2, ball_vel[1]+2)
+            ball_vel = [ball_vel[0]+2, ball_vel[1]+2]
         if ball_vel[0] < 0 and ball_vel[1] < 0:
-            ball_vel = (ball_vel[0]-2, ball_vel[1]-2)
+            ball_vel = [ball_vel[0]-2, ball_vel[1]-2]
         if ball_vel[0] > 0 and ball_vel[1] < 0:
-            ball_vel = (ball_vel[0]+2, ball_vel[1]-2)
+            ball_vel = [ball_vel[0]+2, ball_vel[1]-2]
         if ball_vel[0] < 0 and ball_vel[1] > 0:
-            ball_vel = (ball_vel[0]-2, ball_vel[1]+2)
+            ball_vel = [ball_vel[0]-2, ball_vel[1]+2]
     return ball_vel
 
 def move_control(ball_vel):
     """Defines commands for moving control"""
     if event.key == pygame.K_UP:
-        ball_vel = (ball_vel[0], ball_vel[1]-1)
+        ball_vel = [ball_vel[0], ball_vel[1]-1]
     if event.key == pygame.K_DOWN:
-        ball_vel = (ball_vel[0], ball_vel[1]+1)
+        ball_vel = [ball_vel[0], ball_vel[1]+1]
     if event.key == pygame.K_RIGHT:
-        ball_vel = (ball_vel[0]+1, ball_vel[1])
+        ball_vel = [ball_vel[0]+1, ball_vel[1]]
     if event.key == pygame.K_LEFT:
-        ball_vel = (ball_vel[0]-1, ball_vel[1])
+        ball_vel = [ball_vel[0]-1, ball_vel[1]]
     if event.key == pygame.K_SPACE:
         ball_vel = shoot_control(ball_vel)
     if event.key == pygame.K_b:
@@ -152,37 +152,37 @@ def move_control(ball_vel):
 def ball(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
 
-b1_pos = (800, 350)
-b2_pos = (800, 375)
-b3_pos = (800, 400)
-b4_pos = (800, 425)
-b5_pos = (800, 450)
-b6_pos = (780, 437)
-b7_pos = (780, 412)
-b8_pos = (780, 387)
-b9_pos = (780, 362)
-b10_pos = (760, 375)
-b11_pos = (760, 400)
-b12_pos = (760, 425)
-b13_pos = (740, 412)
-b14_pos = (740, 387)
-b15_pos = (720, 400)
+b1_pos = [800, 350]
+b2_pos = [800, 375]
+b3_pos = [800, 400]
+b4_pos = [800, 425]
+b5_pos = [800, 450]
+b6_pos = [780, 437]
+b7_pos = [780, 412]
+b8_pos = [780, 387]
+b9_pos = [780, 362]
+b10_pos = [760, 375]
+b11_pos = [760, 400]
+b12_pos = [760, 425]
+b13_pos = [740, 412]
+b14_pos = [740, 387]
+b15_pos = [720, 400]
 
-b1_vel = (0,0)
-b2_vel = (0,0)
-b3_vel = (0,0)
-b4_vel = (0,0)
-b5_vel = (0,0)
-b6_vel = (0,0)
-b7_vel = (0,0)
-b8_vel = (0,0)
-b9_vel = (0,0)
-b10_vel = (0,0)
-b11_vel = (0,0)
-b12_vel = (0,0)
-b13_vel = (0,0)
-b14_vel = (0,0)
-b15_vel = (0,0)
+b1_vel = [0,0]
+b2_vel = [0,0]
+b3_vel = [0,0]
+b4_vel = [0,0]
+b5_vel = [0,0]
+b6_vel = [0,0]
+b7_vel = [0,0]
+b8_vel = [0,0]
+b9_vel = [0,0]
+b10_vel = [0,0]
+b11_vel = [0,0]
+b12_vel = [0,0]
+b13_vel = [0,0]
+b14_vel = [0,0]
+b15_vel = [0,0]
 
 
 def creating_balls():
@@ -227,6 +227,7 @@ def one_collision(a, b):
     ans = math.hypot(a[0]-b[0], a[1]-b[1])
     if ans <= 20:
         print('COLLISION')      
+        return True
     else:
         print('no collision')
         return False
@@ -235,15 +236,26 @@ def checking_collisions():
     """checks collisions between all objects"""
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    for b in L:
-        #if b == L[-1]:
-            #return C
-        #else:
-        for r in L[1:len(L)]:
-            check = one_collision(balls, rest)
+    V = [ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+
+    for b in L[0:(len(L)-1)]:
+        indexCount = 1
+        bCount = 0
+        for r in L[1:]:
+            L = L[2:]
+            check = one_collision(b, r)
+            #print(check)
             if check == True:
-                C += [balls, rest]
-    return C
+                    onex = V[bCount]
+                    twox = V[indexCount]
+                    print(onex)
+                    print(twox)
+                    return V[bCount], V[indexCount]
+            bCount += 1
+            indexCount += 1
+                #C += [b] + [r]
+            #print(C)
+    print(V)    #return C
 
 
 def in_pocket(a):  
@@ -266,15 +278,7 @@ def all_pockets():
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     for x in L[0:(len(L))]:
         in_pocket(x)
-    for b in L[0:(len(L)-1)]:
-        for r in L[1:]:
-            check = one_collision(b, r)
-            L = L[2:]
-            print(check)
-            if check == True:
-                C += [b] + [r]
-    print(C)
-    return C
+
 
 def update_balls():
     pass
@@ -288,7 +292,7 @@ while True:
     clock.tick(60)
 
     ball_pos, ball_vel = update_control(window_size, ball_pos, ball_vel, ball_radius)
-    draw_control(window, ball_color, ball_pos, ball_radius)
+    control = draw_control(window, ball_color, ball_pos, ball_radius)
 
     b1, b2, b3, b4, b5 = creating_balls()
 
