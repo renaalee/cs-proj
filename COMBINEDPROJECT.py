@@ -316,10 +316,23 @@ def all_pockets():
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     b = [x for x in L if in_pocket(x) == False]
 
+
 def timer():
-    """Creates a timer that runs throughout the game. """
+    """Creates a timer that runs throughout the game."""
     clock = pygame.time.Clock()
-    return clock
+    font = pygame.font.Font(None, 30)
+    frame_count = 0
+    frame_rate = 60
+    total_seconds = frame_count  // frame_rate
+    
+    minutes = total_seconds // 60
+    seconds = total_seconds % 60
+    
+    output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
+    text = font.render(output_string, True, [0, 0, 0])
+    window.blit(text, [500, 50])
+    frame_count += 1
+    
 
 
 while True:
@@ -328,6 +341,7 @@ while True:
     table = draw_table()
 
     clock.tick(60)
+    timer()
 
     ball_pos, ball_vel = update_control(ball_pos, ball_vel, ball_radius)
     control = draw_control(window, ball_color, ball_pos, ball_radius)
