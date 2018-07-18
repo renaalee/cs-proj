@@ -250,8 +250,9 @@ def boundary(b_pos, b_vel, rad):
 
 
 
-def update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel):
-    
+def update_all():
+    global ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
+
     lst = checking_collisions()
     print('collisions:', lst)
     for x in lst:
@@ -286,7 +287,7 @@ def update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_ve
             #return b5_pos, b5_vel
 
     print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
-    return ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
+    #return ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
 
 def stopc(ball_pos, ball_vel):
     ball_vel = [0,0]
@@ -378,7 +379,7 @@ while True:
     #one_collision(ball_pos, b1_pos)
     #checking_collisions()
 
-    ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel = update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
+    update_all() 
 
     boundary(b1_pos, b1_vel, rad)
     boundary(b2_pos, b2_vel, rad)
