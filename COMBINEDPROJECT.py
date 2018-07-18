@@ -324,7 +324,7 @@ def all_pockets():
     b = [x for x in L if in_pocket(x) == False]
 
 
-#def timer():
+def timer():
     """Creates a timer that runs throughout the game."""
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 30)
