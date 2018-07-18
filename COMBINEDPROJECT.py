@@ -64,7 +64,6 @@ ball_pos = [550, 400]
 ball_vel = [0,0]
 ball_radius = 10
 ball_color = pygame.Color(127,127,255)
-
 clock = pygame.time.Clock()
 
 def update_control():#ball_pos, ball_vel, ball_radius):
@@ -324,6 +323,56 @@ def rxn5(b5_pos, b5_vel):
     b5_pos = [b5_pos[0] + b5_vel[0], b5_pos[1] + b5_vel[1]]
     return b5_pos, b5_vel
 
+#def rxn6(b6_pos, b6_vel):
+#    b6_vel = 
+#    b6_pos = 
+#    return b6_pos, b6_vel
+
+#def rxn7(b7_pos, b7_vel):
+#    b7_vel = 
+#    b7_pos = 
+#    return b7_pos, b7_vel
+
+#def rxn8(b8_pos, b8_vel):
+#    b8_vel = 
+#    b8_pos = 
+#    return b8_pos, b8_vel
+
+#def rxn9(b9_pos, b9_vel):
+#    b9_vel = 
+#    b9_pos = 
+#    return b9_pos, b9_vel
+    
+#def rxn10(b10_pos, b10_vel):
+#    b10_vel = 
+#    b10_pos = 
+#    return b10_pos, b10_vel
+
+#def rxn11(b11_pos, b11_vel):
+#    b11_vel = 
+#    b11_pos = 
+#    return b11_pos, b11_vel
+
+#def rxn12(b12_pos, b12_vel):
+#    b12_vel = 
+#    b12_pos = 
+#    return b12_pos, b12_vel
+
+#def rxn13(b13_pos, b13_vel):
+#    b13_vel = 
+#    b13_pos = 
+#    return b13_pos, b13_vel
+
+#def rxn14(b14_pos, b14_vel):
+#    b14_vel = 
+#    b14_pos = 
+#    return b14_pos, b14_vel
+
+#def rxn15(b15_pos, b15_vel):
+#    b15_vel = 
+#    b15_pos = 
+#    return b15_pos, b15_vel
+
 def in_pocket(a):
     """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
     if a[0] <= 140 and a[1] <= 140:
@@ -346,6 +395,7 @@ def all_pockets():
     If they are in a pocket, excluding the control ball, they are removed from the list. """
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     b = [x for x in L if in_pocket(x) == False]
+    return b
 
 
 def timer():
@@ -356,22 +406,34 @@ def timer():
     frame_rate = 1000
     total_seconds = frame_count  // frame_rate
 
+    if in_pocket(ball_pos) == True:
+        total_seconds += 30
+
     seconds = total_seconds % 60
     minutes = total_seconds // 60
     
     output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
     text = font.render(output_string, True, [0, 0, 0])
-    window.blit(text, [500, 50])
+    window.blit(text, [300, 50])
     
 
+def score():
+    """Displays the number of balls left to get in the pockets. """
+    font = pygame.font.Font(None, 30)
+    left = len(all_pockets())
+    output_string = "Left To Go: {0:02}".format(left)
+    text = font.render(output_string, True, [0, 0, 0])
+    window.blit(text, [700, 50])
 
-window = pygame.display.set_mode(window_size)
+
 while True:
+    window = pygame.display.set_mode(window_size)
     window.fill(window_color)
     table = draw_table()
 
     clock.tick(60)
     timer()
+    score()
 
     #ball_pos, ball_vel = 
     update_control()#ball_pos, ball_vel, ball_radius)
@@ -388,8 +450,6 @@ while True:
     update_all() #checks for collisions and dictates reactions
 
 
-
-
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             ball_vel = move_control(ball_vel)        
@@ -401,3 +461,5 @@ while True:
     
 
     pygame.display.flip()
+
+#Change
