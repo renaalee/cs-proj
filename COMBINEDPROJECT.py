@@ -209,12 +209,12 @@ def creating_balls():
 
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
-    ans = math.hypot(a[0]-b[0], a[1]-b[1])
+    ans = ((a[0]-b[0])**2 + (a[1]-b[1])**2)**(1/2)
     if ans <= 20:
-        #print('COLLISION')      
+        print('COLLISION')      
         return True
     else:
-        #print('no collision')
+        print('no collision')
         return False
 
 def checking_collisions():
@@ -224,18 +224,22 @@ def checking_collisions():
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
 
-    bCount = 0
-    for b in L[0:(len(L)-1)]:
-        indexCount = 1
-        for r in L[1:]:
-            L = L[2:]
-            check = one_collision(b, r)
-            #print(check)
+    #bCount = 0
+    for b in range(len(L)):
+        #indexCount = 1
+        for r in range(len(L)):
+            if b == r:
+                continue
+            print(b, ' , ', r)
+            check = one_collision(L[b], L[r])
+
+            print(check)
             if check == True:
-                    C += [bCount] + [indexCount]
-                    #print(C)
-            indexCount += 1
-        bCount += 1
+                C += [b] + [r]
+                print(C)
+            #indexCount += 1           
+        #bCount += 1
+
     return C
 
 
@@ -269,29 +273,24 @@ def update_all():
         if x == 0:
             #print(x, 'collided')
             ball_pos, ball_vel = stopc(ball_pos, ball_vel)
-            #return ball_pos, ball_vel
         elif x == 1:
            # print(x, 'collided')
             b1_pos, b1_vel = rxn1(b1_pos, b1_vel)
-            #return b1_pos, b1_vel
         elif x==2:
            # print(x, 'collided')
             b2_pos, b2_vel = rxn2(b2_pos, b2_vel)
-            #return b2_pos, b2_vel
         elif x == 3:
            # print(x, 'collided')
             b3_pos, b3_vel = rxn3(b3_pos, b3_vel)
-            #return b3_pos, b3_vel
         elif x ==4:
             #print(x, 'collided')
             b4_pos, b4_vel = rxn4(b4_pos, b4_vel)
-            #return b4_pos, b4_vel
         elif x==5:
            # print(x, 'collided')
             b5_pos, b5_vel = rxn5(b5_pos, b5_vel)
-            #return b5_pos, b5_vel
+
     #print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
-    #return ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
+
 
 def stopc(ball_pos, ball_vel):
     ball_vel = [0,0]
@@ -446,6 +445,9 @@ while True:
     
     #one_collision(ball_pos, b1_pos)
     #checking_collisions()
+
+    #if one_collision(b5_pos, b4_pos)==True:
+        #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
 
