@@ -238,16 +238,14 @@ def checking_collisions():
         bCount += 1
     return C
 
+
 def boundary(b_pos, b_vel, rad):
     if b_pos[0] + rad >= table_dims[2] or b_pos[0] - rad <= table_dims[0]:
         b_vel = [-b_vel[0], b_vel[1]]
     if b_pos[1] + rad >= table_dims[3] or b_pos[1] - rad <= table_dims[1]:
         b_vel = [b_vel[0], -b_vel[1]]
-    
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
-
     return b_pos, b_vel
-
 
 
 def update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel):
@@ -318,6 +316,56 @@ def rxn5(b5_pos, b5_vel):
     b5_pos = [b5_pos[0] + b5_vel[0], b5_pos[1] + b5_vel[1]]
     return b5_pos, b5_vel
 
+#def rxn6(b6_pos, b6_vel):
+#    b6_vel = 
+#    b6_pos = 
+#    return b6_pos, b6_vel
+
+#def rxn7(b7_pos, b7_vel):
+#    b7_vel = 
+#    b7_pos = 
+#    return b7_pos, b7_vel
+
+#def rxn8(b8_pos, b8_vel):
+#    b8_vel = 
+#    b8_pos = 
+#    return b8_pos, b8_vel
+
+#def rxn9(b9_pos, b9_vel):
+#    b9_vel = 
+#    b9_pos = 
+#    return b9_pos, b9_vel
+    
+#def rxn10(b10_pos, b10_vel):
+#    b10_vel = 
+#    b10_pos = 
+#    return b10_pos, b10_vel
+
+#def rxn11(b11_pos, b11_vel):
+#    b11_vel = 
+#    b11_pos = 
+#    return b11_pos, b11_vel
+
+#def rxn12(b12_pos, b12_vel):
+#    b12_vel = 
+#    b12_pos = 
+#    return b12_pos, b12_vel
+
+#def rxn13(b13_pos, b13_vel):
+#    b13_vel = 
+#    b13_pos = 
+#    return b13_pos, b13_vel
+
+#def rxn14(b14_pos, b14_vel):
+#    b14_vel = 
+#    b14_pos = 
+#    return b14_pos, b14_vel
+
+#def rxn15(b15_pos, b15_vel):
+#    b15_vel = 
+#    b15_pos = 
+#    return b15_pos, b15_vel
+
 def in_pocket(a):
     """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
     if a[0] <= 140 and a[1] <= 140:
@@ -373,6 +421,12 @@ while True:
 
     b1, b2, b3, b4, b5 = creating_balls()
 
+    boundary(b1_pos, b1_vel, rad)
+    boundary(b2_pos, b2_vel, rad)
+    boundary(b3_pos, b3_vel, rad)
+    boundary(b4_pos, b4_vel, rad)
+    boundary(b5_pos, b5_vel, rad)
+
     all_pockets()
     
     #one_collision(ball_pos, b1_pos)
@@ -380,11 +434,7 @@ while True:
 
     ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel = update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
 
-    boundary(b1_pos, b1_vel, rad)
-    boundary(b2_pos, b2_vel, rad)
-    boundary(b3_pos, b3_vel, rad)
-    boundary(b4_pos, b4_vel, rad)
-    boundary(b5_pos, b5_vel, rad)
+
 
 
     for event in pygame.event.get():
