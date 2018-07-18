@@ -236,23 +236,16 @@ def checking_collisions():
         bCount += 1
     return C
 
-def boundary(b_pos, b_vel, b_radius):
-    if b_pos[0] + b_radius >= table_dims[2] or b_pos[0] - b_radius <= table_dims[0]:
+def boundary(b_pos, b_vel, rad):
+    if b_pos[0] + rad >= table_dims[2] or b_pos[0] - rad <= table_dims[0]:
         b_vel = [-b_vel[0], b_vel[1]]
-    elif b_pos[1] + b_radius >= table_dims[3] or b_pos[1] - b_radius <= table_dims[1]:
+    if b_pos[1] + rad >= table_dims[3] or b_pos[1] - rad <= table_dims[1]:
         b_vel = [b_vel[0], -b_vel[1]]
-    else:
-        return False
-
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
     return b_pos, b_vel
 
-boundary(b1_pos, b1_vel, rad)
-boundary(b2_pos, b2_vel, rad)
-boundary(b3_pos, b3_vel, rad)
-boundary(b4_pos, b4_vel, rad)
-boundary(b5_pos, b5_vel, rad)
+
 
 def update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel):
     lst = checking_collisions()
@@ -353,12 +346,20 @@ while True:
 
     b1, b2, b3, b4, b5 = creating_balls()
 
+    boundary(b1_pos, b1_vel, rad)
+    boundary(b2_pos, b2_vel, rad)
+    boundary(b3_pos, b3_vel, rad)
+    boundary(b4_pos, b4_vel, rad)
+    boundary(b5_pos, b5_vel, rad)
+
     all_pockets()
     
     #one_collision(ball_pos, b1_pos)
     #checking_collisions()
 
     ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel = update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
+
+
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
