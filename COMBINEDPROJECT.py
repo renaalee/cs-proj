@@ -236,14 +236,15 @@ def checking_collisions():
         bCount += 1
     return C
 
-def boundary(b_pos, b_vel, rad):
-    if b_pos[0] + rad >= table_dims[2] or b_pos[0] - rad <= table_dims[0]:
-        b_vel = [-b_vel[0], b_vel[1]]
-    if b_pos[1] + rad >= table_dims[3] or b_pos[1] - rad <= table_dims[1]:
-        b_vel = [b_vel[0], -b_vel[1]]
-    b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
+def boundary(p, v, rad):
+    if p[0] + rad >= table_dims[2] or p[0] - rad <= table_dims[0]:
+        v = [v[0]* -1, v[1]]
+    if p[1] + rad >= table_dims[3] or p[1] - rad <= table_dims[1]:
+        v = [v[0], v[1]* -1]
+    
+    p = [p[0] + v[0], p[1]+ v[1]]
 
-    return b_pos, b_vel
+    return p, v
 
 
 
@@ -324,6 +325,9 @@ def timer():
     frame_count = pygame.time.get_ticks()
     frame_rate = 1000
     total_seconds = frame_count  // frame_rate
+
+    if in_pocket(ball_pos) == True:
+        total_seconds += 30
 
     seconds = total_seconds % 60
     minutes = total_seconds // 60
