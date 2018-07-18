@@ -324,23 +324,21 @@ def all_pockets():
     b = [x for x in L if in_pocket(x) == False]
 
 
-#def timer():
+def timer():
     """Creates a timer that runs throughout the game."""
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 30)
-    frame_count = 0
-    frame_rate = 60
+    frame_count = pygame.time.get_ticks()
+    frame_rate = 1000
     total_seconds = frame_count  // frame_rate
-    
-    minutes = total_seconds // 60
+
     seconds = total_seconds % 60
+    minutes = total_seconds // 60
     
     output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [500, 50])
-    frame_count += 1
     
-
 
 while True:
     window = pygame.display.set_mode(window_size)
@@ -373,4 +371,3 @@ while True:
     
 
     pygame.display.flip()
- #CHANGE
