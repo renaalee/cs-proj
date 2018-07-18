@@ -205,6 +205,7 @@ def creating_balls():
     #b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
     #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
     #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
+    
     return b1, b2, b3, b4, b5
 
 def one_collision(a, b):
@@ -238,15 +239,25 @@ def checking_collisions():
         bCount += 1
     return C
 
-def boundary(b_pos, b_vel, rad):
-    if b_pos[0] + rad >= table_dims[2] or b_pos[0] - rad <= table_dims[0]:
-        b_vel = [-b_vel[0], b_vel[1]]
-    if b_pos[1] + rad >= table_dims[3] or b_pos[1] - rad <= table_dims[1]:
-        b_vel = [b_vel[0], -b_vel[1]]
-    
-    b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
-    return b_pos, b_vel
+def bound_and_roll():
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel
+    P = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+
+    for x in range(5):
+        #print(type(P[0]))
+        #print(type(table_dims[2]))
+        if P[x][0] + rad >= table_dims[2] or P[x][0] - rad <= table_dims[0]:
+            V[x] = [-V[x][0], V[x][1]]
+        if P[x][1] + rad >= table_dims[3] or P[x][1] - rad <= table_dims[1]:
+            V[x] = [V[x][0], - V[x][1]]
+    
+    for x in range(5):
+        P[x] = [P[x][0] + V[x][0], P[x][1] + V[x][1]]
+
+    b1_pos, b2_pos, b3_pos, b4_pos, b5_pos = P[0], P[1], P[2], P[3], P[4]
+    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
 
 
 
@@ -254,39 +265,33 @@ def update_all():
     global ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
 
     lst = checking_collisions()
-    print('collisions:', lst)
+    #print('collisions:', lst)
     for x in lst:
         if x == 0:
-            print(x, 'collided')
+            #print(x, 'collided')
             ball_pos, ball_vel = stopc(ball_pos, ball_vel)
             #return ball_pos, ball_vel
-
         elif x == 1:
-            print(x, 'collided')
+           # print(x, 'collided')
             b1_pos, b1_vel = rxn1(b1_pos, b1_vel)
             #return b1_pos, b1_vel
-
         elif x==2:
-            print(x, 'collided')
+           # print(x, 'collided')
             b2_pos, b2_vel = rxn2(b2_pos, b2_vel)
             #return b2_pos, b2_vel
-
         elif x == 3:
-            print(x, 'collided')
+           # print(x, 'collided')
             b3_pos, b3_vel = rxn3(b3_pos, b3_vel)
             #return b3_pos, b3_vel
-
         elif x ==4:
-            print(x, 'collided')
+            #print(x, 'collided')
             b4_pos, b4_vel = rxn4(b4_pos, b4_vel)
             #return b4_pos, b4_vel
-
         elif x==5:
-            print(x, 'collided')
+           # print(x, 'collided')
             b5_pos, b5_vel = rxn5(b5_pos, b5_vel)
             #return b5_pos, b5_vel
-
-    print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
+    #print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
     #return ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
 
 def stopc(ball_pos, ball_vel):
@@ -371,21 +376,18 @@ while True:
     #ball_pos, ball_vel = 
     update_control()#ball_pos, ball_vel, ball_radius)
     control = draw_control(window, ball_color, ball_pos, ball_radius)
-
-    b1, b2, b3, b4, b5 = creating_balls()
+    
+    creating_balls()
+    bound_and_roll()
 
     all_pockets()
     
     #one_collision(ball_pos, b1_pos)
     #checking_collisions()
 
-    update_all() 
+    update_all() #checks for collisions and dictates reactions
 
-    boundary(b1_pos, b1_vel, rad)
-    boundary(b2_pos, b2_vel, rad)
-    boundary(b3_pos, b3_vel, rad)
-    boundary(b4_pos, b4_vel, rad)
-    boundary(b5_pos, b5_vel, rad)
+
 
 
     for event in pygame.event.get():
