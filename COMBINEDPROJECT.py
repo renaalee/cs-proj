@@ -67,7 +67,9 @@ ball_color = pygame.Color(127,127,255)
 
 clock = pygame.time.Clock()
 
-def update_control(ball_pos, ball_vel, ball_radius):
+def update_control():#ball_pos, ball_vel, ball_radius):
+    global ball_pos, ball_vel, ball_radius, table_dims
+
     if ball_pos[0] + ball_radius >= table_dims[2] or ball_pos[0] - ball_radius <= table_dims[0]:
         ball_vel = [-ball_vel[0], ball_vel[1]]
     if ball_pos[1] + ball_radius >= table_dims[3] or ball_pos[1] - ball_radius <= table_dims[1]:
@@ -75,7 +77,7 @@ def update_control(ball_pos, ball_vel, ball_radius):
 
     ball_pos = [ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1]]
 
-    return ball_pos, ball_vel
+    #return ball_pos, ball_vel
 
 
 def draw_control(surface, ball_color, ball_pos, ball_radius):
@@ -241,6 +243,7 @@ def boundary(b_pos, b_vel, rad):
         b_vel = [-b_vel[0], b_vel[1]]
     if b_pos[1] + rad >= table_dims[3] or b_pos[1] - rad <= table_dims[1]:
         b_vel = [b_vel[0], -b_vel[1]]
+    
     b_pos = [b_pos[0] + b_vel[0], b_pos[1]+b_vel[1]]
 
     return b_pos, b_vel
@@ -248,19 +251,41 @@ def boundary(b_pos, b_vel, rad):
 
 
 def update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel):
+    
     lst = checking_collisions()
-    if 0 in lst:
-        ball_pos, ball_vel = stopc(ball_pos, ball_vel)
-    if 1 in lst:
-        b1_pos, b1_vel = rxn1(b1_pos, b1_vel)
-    if 2 in lst:
-        b2_pos, b2_vel = rxn2(b2_vel, b2_pos)
-    if 3 in lst:
-        b3_pos, b3_vel = rxn3(b3_vel, b3_pos)
-    if 4 in lst:
-        b4_pos, b4_vel = rxn4(b4_vel, b4_pos)
-    if 5 in lst:
-        b5_pos, b5_vel = rxn5(b5_vel, b5_pos)
+    print('collisions:', lst)
+    for x in lst:
+        if x == 0:
+            print(x, 'collided')
+            ball_pos, ball_vel = stopc(ball_pos, ball_vel)
+            #return ball_pos, ball_vel
+
+        elif x == 1:
+            print(x, 'collided')
+            b1_pos, b1_vel = rxn1(b1_pos, b1_vel)
+            #return b1_pos, b1_vel
+
+        elif x==2:
+            print(x, 'collided')
+            b2_pos, b2_vel = rxn2(b2_pos, b2_vel)
+            #return b2_pos, b2_vel
+
+        elif x == 3:
+            print(x, 'collided')
+            b3_pos, b3_vel = rxn3(b3_pos, b3_vel)
+            #return b3_pos, b3_vel
+
+        elif x ==4:
+            print(x, 'collided')
+            b4_pos, b4_vel = rxn4(b4_pos, b4_vel)
+            #return b4_pos, b4_vel
+
+        elif x==5:
+            print(x, 'collided')
+            b5_pos, b5_vel = rxn5(b5_pos, b5_vel)
+            #return b5_pos, b5_vel
+
+    print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
     return ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
 
 def stopc(ball_pos, ball_vel):
@@ -273,25 +298,25 @@ def rxn1(b1_pos, b1_vel):
     b1_pos = [b1_pos[0] + b1_vel[0], b1_pos[1] + b1_vel[1]]
     return b1_pos, b1_vel
 
-def rxn2(b2_vel, b2_pos):
+def rxn2(b2_pos, b2_vel):
     b2_vel = [b2_vel[0]+2,b2_vel[1]+2]
     b2_pos = [b2_pos[0] + b2_vel[0], b2_pos[1] + b2_vel[1]]
-    return b2_vel, b2_pos 
+    return b2_pos, b2_vel
 
-def rxn3(b3_vel, b3_pos):
+def rxn3(b3_pos, b3_vel):
     b3_vel = [b3_vel[0]+1, b3_vel[1]]
     b3_pos = [b3_pos[0] + b3_vel[0], b3_pos[1] + b3_vel[1]]
-    return b3_vel, b3_pos
+    return b3_pos, b3_vel
 
-def rxn4(b4_vel, b4_pos):
+def rxn4(b4_pos, b4_vel):
     b4_vel = [b4_vel[0]+2, b4_vel[1]]
-    b3_pos = [b4_pos[0] + b4_vel[0], b4_pos[1] + b4_vel[1]]
-    return b4_vel, b4_pos
+    b4_pos = [b4_pos[0] + b4_vel[0], b4_pos[1] + b4_vel[1]]
+    return b4_pos, b4_vel
 
-def rxn5(b5_vel, b5_pos):
+def rxn5(b5_pos, b5_vel):
     b5_vel = [b5_vel[0], b5_vel[1]+2]
     b5_pos = [b5_pos[0] + b5_vel[0], b5_pos[1] + b5_vel[1]]
-    return b5_vel, b5_pos
+    return b5_pos, b5_vel
 
 def in_pocket(a):
     """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
@@ -335,24 +360,19 @@ def timer():
     
 
 
+window = pygame.display.set_mode(window_size)
 while True:
-    window = pygame.display.set_mode(window_size)
     window.fill(window_color)
     table = draw_table()
 
     clock.tick(60)
     timer()
 
-    ball_pos, ball_vel = update_control(ball_pos, ball_vel, ball_radius)
+    #ball_pos, ball_vel = 
+    update_control()#ball_pos, ball_vel, ball_radius)
     control = draw_control(window, ball_color, ball_pos, ball_radius)
 
     b1, b2, b3, b4, b5 = creating_balls()
-
-    boundary(b1_pos, b1_vel, rad)
-    boundary(b2_pos, b2_vel, rad)
-    boundary(b3_pos, b3_vel, rad)
-    boundary(b4_pos, b4_vel, rad)
-    boundary(b5_pos, b5_vel, rad)
 
     all_pockets()
     
@@ -361,6 +381,11 @@ while True:
 
     ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel = update_all(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
 
+    boundary(b1_pos, b1_vel, rad)
+    boundary(b2_pos, b2_vel, rad)
+    boundary(b3_pos, b3_vel, rad)
+    boundary(b4_pos, b4_vel, rad)
+    boundary(b5_pos, b5_vel, rad)
 
 
     for event in pygame.event.get():
