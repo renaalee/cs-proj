@@ -426,8 +426,7 @@ def score():
 
 collsec = 0
 def stopballs():
-    global collsec, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
-    poss = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel
     V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
     collcheck = checking_collisions()
     frame_count = pygame.time.get_ticks()
