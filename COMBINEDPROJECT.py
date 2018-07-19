@@ -251,9 +251,17 @@ def bound_and_roll():
     for x in range(5):
         #print(type(P[0]))
         #print(type(table_dims[2]))
-        if P[x][0] + rad >= table_dims[2] or P[x][0] - rad <= table_dims[0]:
+        if P[x][0] + rad >= table_dims[2]: 
+            P[x] = [table_dims[2]-10, P[x][1]]
             V[x] = [-V[x][0], V[x][1]]
-        if P[x][1] + rad >= table_dims[3] or P[x][1] - rad <= table_dims[1]:
+        if P[x][0] - rad <= table_dims[0]:
+            P[x] = [table_dims[0]+10, P[x][1]]
+            V[x] = [-V[x][0], V[x][1]]
+        if P[x][1] + rad >= table_dims[3]:
+            P[x] = [P[x][0], table_dims[3]-10]
+            V[x] = [V[x][0], - V[x][1]]
+        if P[x][1] - rad <= table_dims[1]:
+            P[x] = [P[x][0], table_dims[1]+10]
             V[x] = [V[x][0], - V[x][1]]
     
     for x in range(5):
@@ -432,6 +440,7 @@ def stopballs():
 
     V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
     collcheck = checking_collisions()
+    
     frame_count = pygame.time.get_ticks()
     frame_rate = 1000
     totsec = frame_count  // frame_rate
@@ -439,7 +448,7 @@ def stopballs():
     if collcheck != []:
         collsec = frame_count  // frame_rate
     
-    if totsec - collsec > 2:
+    elif totsec - collsec > 2:
         for x in range(len(V)):
             V[x] = [0,0]
 
