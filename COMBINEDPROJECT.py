@@ -397,17 +397,16 @@ def all_pockets():
     b = [x for x in L if in_pocket(x) == False]
     return b
 
-
-def timer():
-    """Creates a timer that runs throughout the game."""
+def timer(add_time):
+    """Creates a timer that runs throughout the game. Should also add 30 seconds when the control ball is in a pocket. """
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 30)
     frame_count = pygame.time.get_ticks()
     frame_rate = 1000
-    total_seconds = frame_count  // frame_rate
+    total_seconds  = frame_count // frame_rate + add_time
 
     if in_pocket(ball_pos) == True:
-        total_seconds += 30
+        add_time += 1
 
     seconds = total_seconds % 60
     minutes = total_seconds // 60
@@ -415,6 +414,8 @@ def timer():
     output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [300, 50])
+    
+    return add_time
     
 
 def score():
@@ -425,14 +426,14 @@ def score():
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [700, 50])
 
-
+add_time = 0
 while True:
     window = pygame.display.set_mode(window_size)
     window.fill(window_color)
     table = draw_table()
 
     clock.tick(60)
-    timer()
+    add_time = timer(add_time)
     score()
 
     #ball_pos, ball_vel = 
@@ -461,5 +462,3 @@ while True:
     
 
     pygame.display.flip()
-
-#Change
