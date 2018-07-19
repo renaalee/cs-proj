@@ -429,7 +429,7 @@ def score():
 collsec = 0
 def stopballs():
     global collsec, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
-    poss = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+
     V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
     collcheck = checking_collisions()
     frame_count = pygame.time.get_ticks()
@@ -439,11 +439,12 @@ def stopballs():
     if collcheck != []:
         collsec = frame_count  // frame_rate
     
-    if totsec - collsec > 7:
+    if totsec - collsec > 2:
         for x in range(len(V)):
             V[x] = [0,0]
 
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
+    update_all()
 
 add_time = 0        #Variable needs to exist outside of the while loop
 while True:
