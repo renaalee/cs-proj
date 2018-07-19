@@ -424,6 +424,24 @@ def score():
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [700, 50])
 
+collsec = 0
+def stopballs():
+    global collsec, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
+    poss = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    collcheck = checking_collisions()
+    frame_count = pygame.time.get_ticks()
+    frame_rate = 1000
+    totsec = frame_count  // frame_rate
+
+    if collcheck != []:
+        collsec = frame_count  // frame_rate
+    
+    if totsec - collsec > 7:
+        for x in range(len(V)):
+            V[x] = [0,0]
+
+    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
 
 while True:
     window = pygame.display.set_mode(window_size)
@@ -450,7 +468,7 @@ while True:
         #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
-
+    stopballs()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -463,5 +481,3 @@ while True:
     
 
     pygame.display.flip()
-
-#Change
