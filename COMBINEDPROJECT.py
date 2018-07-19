@@ -211,10 +211,10 @@ def one_collision(a, b):
     """checks if there is a collision between two balls"""
     ans = ((a[0]-b[0])**2 + (a[1]-b[1])**2)**(1/2)
     if ans <= 20:
-        print('COLLISION')      
+        #print('COLLISION')      
         return True
     else:
-        print('no collision')
+        #print('no collision')
         return False
 
 def checking_collisions():
@@ -230,13 +230,13 @@ def checking_collisions():
         for r in range(len(L)):
             if b == r:
                 continue
-            print(b, ' , ', r)
+            #print(b, ' , ', r)
             check = one_collision(L[b], L[r])
 
-            print(check)
+            #print(check)
             if check == True:
                 C += [b] + [r]
-                print(C)
+                #print(C)
             #indexCount += 1           
         #bCount += 1
 
