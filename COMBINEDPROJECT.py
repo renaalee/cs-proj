@@ -209,7 +209,7 @@ def creating_balls():
 
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
-    ans = math.hypot(a[0]-b[0], a[1]-b[1])
+    ans = ((a[0]-b[0])**2 + (a[1]-b[1])**2)**(1/2)
     if ans <= 20:
         #print('COLLISION')      
         return True
@@ -224,18 +224,22 @@ def checking_collisions():
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
 
-    bCount = 0
-    for b in L[0:(len(L)-1)]:
-        indexCount = 1
-        for r in L[1:]:
-            L = L[2:]
-            check = one_collision(b, r)
+    #bCount = 0
+    for b in range(len(L)):
+        #indexCount = 1
+        for r in range(len(L)):
+            if b == r:
+                continue
+            #print(b, ' , ', r)
+            check = one_collision(L[b], L[r])
+
             #print(check)
             if check == True:
-                    C += [bCount] + [indexCount]
-                    #print(C)
-            indexCount += 1
-        bCount += 1
+                C += [b] + [r]
+                #print(C)
+            #indexCount += 1           
+        #bCount += 1
+
     return C
 
 
@@ -269,29 +273,24 @@ def update_all():
         if x == 0:
             #print(x, 'collided')
             ball_pos, ball_vel = stopc(ball_pos, ball_vel)
-            #return ball_pos, ball_vel
         elif x == 1:
            # print(x, 'collided')
             b1_pos, b1_vel = rxn1(b1_pos, b1_vel)
-            #return b1_pos, b1_vel
         elif x==2:
            # print(x, 'collided')
             b2_pos, b2_vel = rxn2(b2_pos, b2_vel)
-            #return b2_pos, b2_vel
         elif x == 3:
            # print(x, 'collided')
             b3_pos, b3_vel = rxn3(b3_pos, b3_vel)
-            #return b3_pos, b3_vel
         elif x ==4:
             #print(x, 'collided')
             b4_pos, b4_vel = rxn4(b4_pos, b4_vel)
-            #return b4_pos, b4_vel
         elif x==5:
            # print(x, 'collided')
             b5_pos, b5_vel = rxn5(b5_pos, b5_vel)
-            #return b5_pos, b5_vel
+
     #print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
-    #return ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
+
 
 def stopc(ball_pos, ball_vel):
     ball_vel = [0,0]
@@ -426,7 +425,27 @@ def score():
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [700, 50])
 
-add_time = 0
+
+collsec = 0
+def stopballs():
+    global collsec, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
+    poss = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    collcheck = checking_collisions()
+    frame_count = pygame.time.get_ticks()
+    frame_rate = 1000
+    totsec = frame_count  // frame_rate
+
+    if collcheck != []:
+        collsec = frame_count  // frame_rate
+    
+    if totsec - collsec > 7:
+        for x in range(len(V)):
+            V[x] = [0,0]
+
+    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
+
+add_time = 0        #Variable needs to exist outside of the while loop
 while True:
     window = pygame.display.set_mode(window_size)
     window.fill(window_color)
@@ -448,8 +467,11 @@ while True:
     #one_collision(ball_pos, b1_pos)
     #checking_collisions()
 
-    update_all() #checks for collisions and dictates reactions
+    #if one_collision(b5_pos, b4_pos)==True:
+        #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
+    update_all() #checks for collisions and dictates reactions
+    stopballs()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
