@@ -402,7 +402,7 @@ def all_pockets():
     for b in range(len(L)):
         if in_pocket(L[b]) == False:
             w += [b]
-    print(w)
+    #print(w)
     return w
 
 
@@ -447,11 +447,11 @@ def off_table():
             b1_pos = [100, 750]
             b1_vel = [0, 0]
         if b2_pos == x:
-            print("Off table!")
+            #print("Off table!")
             b2_pos = [160, 750]
-            print("Where?")
+            #print("Where?")
             b2_vel = [0, 0]
-            print("Here!")
+            #print("Here!")
         if b3_pos == x:
             b3_pos = [220, 750]
             b3_vel = [0, 0]
@@ -568,8 +568,7 @@ while True:
     add_time = timer(add_time)
     score()
 
-    #ball_pos, ball_vel = 
-    update_control()#ball_pos, ball_vel, ball_radius)
+    update_control()
     control = draw_control(window, ball_color, ball_pos, ball_radius)
     
     creating_balls()
@@ -578,11 +577,6 @@ while True:
     all_pockets()
     off_table()
     
-    #one_collision(ball_pos, b1_pos)
-    #checking_collisions() 
-
-    #if one_collision(b5_pos, b4_pos)==True:
-        #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
     stopballs()
