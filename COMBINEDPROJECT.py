@@ -584,15 +584,14 @@ def stopballs():
 
 def welcome():
     font = pygame.font.Font(None, 30)
-    output_string = "Welcome to Pool! "
+    output_string = "{0: 16} \n {1: 21}".format("Welcome to pool.","Press SPACE to start!")
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [475, 400])
 
 
+
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 add_time = 0        #Variables that need to exist outside of the while loop^
-
-
 while True:
     
     window = pygame.display.set_mode(window_size)
