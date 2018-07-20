@@ -244,9 +244,9 @@ def checking_collisions():
 
 
 def bound_and_roll():
-    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel
-    P = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel
+    P = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel]
 
     for x in range(5):
         #print(type(P[0]))
@@ -394,6 +394,8 @@ def in_pocket(a):
         return True
     elif a[0] >= 960 and a[1] >= 660:
         return True
+    elif a[1] == 750:
+        return True
     else:
         return False
 
@@ -416,8 +418,11 @@ def off_table():
             b1_pos = [100, 750]
             b1_vel = [0, 0]
         if b2_pos == x:
+            print("Off table!")
             b2_pos = [160, 750]
+            print("Where?")
             b2_vel = [0, 0]
+            print("Here!")
         if b3_pos == x:
             b3_pos = [220, 750]
             b3_vel = [0, 0]
@@ -427,6 +432,36 @@ def off_table():
         if b5_pos == x:
             b5_pos = [340, 750]
             b5_vel = [0, 0]
+        if b6_pos == x:
+            b6_pos = [400, 750]
+            b6_vel = [0, 0]
+        if b7_pos == x:
+            b7_pos = [460, 750]
+            b7_vel = [0, 0]
+        if b8_pos == x:
+            b8_pos = [520, 750]
+            b8_vel = [0, 0]
+        if b9_pos == x:
+            b9_pos = [580, 750]
+            b9_vel = [0, 0]
+        if b10_pos == x:
+            b10_pos = [640, 750]
+            b10_vel = [0, 0]
+        if b11_pos == x:
+            b11_pos = [700, 750]
+            b11_vel = [0, 0]
+        if b12_pos == x:
+            b12_pos = [760, 750]
+            b12_vel = [0, 0]
+        if b13_pos == x:
+            b13_pos = [820, 750]
+            b13_vel = [0, 0]
+        if b14_pos == x:
+            b14_pos = [880, 750]
+            b14_vel = [0, 0]
+        if b15_pos == x:
+            b15_pos = [940, 750]
+            b15_vel = [0, 0]
 
 def timer(add_time):
     """Creates a timer that runs throughout the game. Should also add 30 seconds when the control ball is in a pocket. """
@@ -507,7 +542,7 @@ while True:
         #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
-    stopballs()
+    #stopballs()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
