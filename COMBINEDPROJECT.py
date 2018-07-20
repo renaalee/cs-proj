@@ -243,34 +243,6 @@ def checking_collisions():
     return C
 
 
-def bound_and_roll():
-    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_pos, b6_vel, b7_pos, b7_vel, b8_pos, b8_vel, b9_pos, b9_vel, b10_pos, b10_vel, b11_pos, b11_vel, b12_pos, b12_vel, b13_pos, b13_vel, b14_pos, b14_vel, b15_pos, b15_vel
-    P = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel]
-
-    for x in range(len(P)):
-        #print(type(P[0]))
-        #print(type(table_dims[2]))
-        if P[x][0] + rad >= table_dims[2]: 
-            P[x] = [table_dims[2]-10, P[x][1]]
-            V[x] = [-V[x][0], V[x][1]]
-        if P[x][0] - rad <= table_dims[0]:
-            P[x] = [table_dims[0]+10, P[x][1]]
-            V[x] = [-V[x][0], V[x][1]]
-        if P[x][1] + rad >= table_dims[3]:
-            P[x] = [P[x][0], table_dims[3]-10]
-            V[x] = [V[x][0], - V[x][1]]
-        if P[x][1] - rad <= table_dims[1]:
-            P[x] = [P[x][0], table_dims[1]+10]
-            V[x] = [V[x][0], - V[x][1]]
-    
-    for x in range(len(P)):
-        P[x] = [P[x][0] + V[x][0], P[x][1] + V[x][1]]
-
-    b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = P[0], P[1], P[2], P[3], P[4], P[5], P[6], P[7], P[8], P[9], P[10], P[11], P[12], P[13], P[14]
-    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
-
-
 
 def update_all():
     global ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel, b6_pos, b6_vel, b7_pos, b7_vel, b8_pos, b8_vel, b9_pos, b9_vel, b10_pos, b10_vel, b11_pos, b11_vel, b12_pos, b12_vel, b13_pos, b13_vel, b14_pos, b14_vel, b15_pos, b15_vel
@@ -423,9 +395,46 @@ def all_pockets():
     """Takes a list of all the balls and checks to see if any are in a pocket.
     If they are in a pocket, excluding the control ball, they are removed from the list. """
     global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
-    L = b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
-    b = [x for x in L if in_pocket(x) == False]
-    return b
+    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    #b = [x for x in L if in_pocket(x) == False]
+
+    w = []
+    for b in range(len(L)):
+        if in_pocket(L[b]) == False:
+            w += [b]
+    print(w)
+    return w
+
+
+def bound_and_roll():
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_pos, b6_vel, b7_pos, b7_vel, b8_pos, b8_vel, b9_pos, b9_vel, b10_pos, b10_vel, b11_pos, b11_vel, b12_pos, b12_vel, b13_pos, b13_vel, b14_pos, b14_vel, b15_pos, b15_vel
+    P = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel]
+
+    w = all_pockets()
+    for x in w:
+        #print(type(P[0]))
+        #print(type(table_dims[2]))
+        if P[x][0] + rad >= table_dims[2]: 
+            P[x] = [table_dims[2]-10, P[x][1]]
+            V[x] = [-V[x][0], V[x][1]]
+        if P[x][0] - rad <= table_dims[0]:
+            P[x] = [table_dims[0]+10, P[x][1]]
+            V[x] = [-V[x][0], V[x][1]]
+        if P[x][1] + rad >= table_dims[3]:
+            P[x] = [P[x][0], table_dims[3]-10]
+            V[x] = [V[x][0], - V[x][1]]
+        if P[x][1] - rad <= table_dims[1]:
+            P[x] = [P[x][0], table_dims[1]+10]
+            V[x] = [V[x][0], - V[x][1]]
+    
+    for x in range(len(P)):
+        P[x] = [P[x][0] + V[x][0], P[x][1] + V[x][1]]
+
+    b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = P[0], P[1], P[2], P[3], P[4], P[5], P[6], P[7], P[8], P[9], P[10], P[11], P[12], P[13], P[14]
+    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
+
+
 
 def off_table():
     """Takes the balls that have been scored and places them somewhere off the table. """
@@ -579,4 +588,3 @@ while True:
     
 
     pygame.display.flip()
-#changeeeEEee
