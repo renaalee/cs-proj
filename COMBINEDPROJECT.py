@@ -414,15 +414,74 @@ def in_pocket(a):
         return True
     elif a[0] >= 960 and a[1] >= 660:
         return True
+    elif a[1] == 750:
+        return True
     else:
         return False
 
 def all_pockets():
     """Takes a list of all the balls and checks to see if any are in a pocket.
     If they are in a pocket, excluding the control ball, they are removed from the list. """
-    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
+    L = b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
     b = [x for x in L if in_pocket(x) == False]
     return b
+
+def off_table():
+    """Takes the balls that have been scored and places them somewhere off the table. """
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
+    global b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel
+    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    g = [x for x in L if in_pocket(x) == True]
+    for x in g:
+        if b1_pos == x:
+            b1_pos = [100, 750]
+            b1_vel = [0, 0]
+        if b2_pos == x:
+            print("Off table!")
+            b2_pos = [160, 750]
+            print("Where?")
+            b2_vel = [0, 0]
+            print("Here!")
+        if b3_pos == x:
+            b3_pos = [220, 750]
+            b3_vel = [0, 0]
+        if b4_pos == x:
+            b4_pos = [280, 750]
+            b4_vel = [0, 0]
+        if b5_pos == x:
+            b5_pos = [340, 750]
+            b5_vel = [0, 0]
+        if b6_pos == x:
+            b6_pos = [400, 750]
+            b6_vel = [0, 0]
+        if b7_pos == x:
+            b7_pos = [460, 750]
+            b7_vel = [0, 0]
+        if b8_pos == x:
+            b8_pos = [520, 750]
+            b8_vel = [0, 0]
+        if b9_pos == x:
+            b9_pos = [580, 750]
+            b9_vel = [0, 0]
+        if b10_pos == x:
+            b10_pos = [640, 750]
+            b10_vel = [0, 0]
+        if b11_pos == x:
+            b11_pos = [700, 750]
+            b11_vel = [0, 0]
+        if b12_pos == x:
+            b12_pos = [760, 750]
+            b12_vel = [0, 0]
+        if b13_pos == x:
+            b13_pos = [820, 750]
+            b13_vel = [0, 0]
+        if b14_pos == x:
+            b14_pos = [880, 750]
+            b14_vel = [0, 0]
+        if b15_pos == x:
+            b15_pos = [940, 750]
+            b15_vel = [0, 0]
 
 def timer(add_time):
     """Creates a timer that runs throughout the game. Should also add 30 seconds when the control ball is in a pocket. """
@@ -459,20 +518,28 @@ def stopballs():
     global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, v13_vel, b14_vel, b15_vel
     V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel]
     collcheck = checking_collisions()
+    
     frame_count = pygame.time.get_ticks()
     frame_rate = 1000
     totsec = frame_count  // frame_rate
 
     if collcheck != []:
         collsec = frame_count  // frame_rate
+        #print('collsec')
     
-    if totsec - collsec > 7:
+    elif totsec - collsec == 3:
         for x in range(len(V)):
             V[x] = [0,0]
 
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, v13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
+    #print('all have stopped')
+    bound_and_roll()
+    #print('updating')
+    #update_all()
 
-add_time = 0        #Variable needs to exist outside of the while loop
+
+L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+add_time = 0        #Variables that need to exist outside of the while loop
 while True:
     window = pygame.display.set_mode(window_size)
     window.fill(window_color)
@@ -490,6 +557,7 @@ while True:
     bound_and_roll()
 
     all_pockets()
+    off_table()
     
     #one_collision(ball_pos, b1_pos)
     #checking_collisions()
@@ -511,3 +579,4 @@ while True:
     
 
     pygame.display.flip()
+#changeeeEEee
