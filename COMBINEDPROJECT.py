@@ -251,9 +251,17 @@ def bound_and_roll():
     for x in range(5):
         #print(type(P[0]))
         #print(type(table_dims[2]))
-        if P[x][0] + rad >= table_dims[2] or P[x][0] - rad <= table_dims[0]:
+        if P[x][0] + rad >= table_dims[2]: 
+            P[x] = [table_dims[2]-10, P[x][1]]
             V[x] = [-V[x][0], V[x][1]]
-        if P[x][1] + rad >= table_dims[3] or P[x][1] - rad <= table_dims[1]:
+        if P[x][0] - rad <= table_dims[0]:
+            P[x] = [table_dims[0]+10, P[x][1]]
+            V[x] = [-V[x][0], V[x][1]]
+        if P[x][1] + rad >= table_dims[3]:
+            P[x] = [P[x][0], table_dims[3]-10]
+            V[x] = [V[x][0], - V[x][1]]
+        if P[x][1] - rad <= table_dims[1]:
+            P[x] = [P[x][0], table_dims[1]+10]
             V[x] = [V[x][0], - V[x][1]]
     
     for x in range(5):
@@ -452,10 +460,10 @@ def score():
 
 collsec = 0
 def stopballs():
-    global collsec, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
-    poss = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel
     V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
     collcheck = checking_collisions()
+    
     frame_count = pygame.time.get_ticks()
     frame_rate = 1000
     totsec = frame_count  // frame_rate
@@ -463,11 +471,12 @@ def stopballs():
     if collcheck != []:
         collsec = frame_count  // frame_rate
     
-    if totsec - collsec > 7:
+    elif totsec - collsec > 2:
         for x in range(len(V)):
             V[x] = [0,0]
 
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
+    update_all()
 
 
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
@@ -511,3 +520,4 @@ while True:
     
 
     pygame.display.flip()
+#changeeeEEee
