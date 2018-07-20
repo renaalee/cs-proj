@@ -402,7 +402,6 @@ def all_pockets():
     for b in range(len(L)):
         if in_pocket(L[b]) == False:
             w += [b]
-    print(w)
     return w
 
 
@@ -413,8 +412,6 @@ def bound_and_roll():
 
     w = all_pockets()
     for x in w:
-        #print(type(P[0]))
-        #print(type(table_dims[2]))
         if P[x][0] + rad >= table_dims[2]: 
             P[x] = [table_dims[2]-10, P[x][1]]
             V[x] = [-V[x][0], V[x][1]]
@@ -444,52 +441,49 @@ def off_table():
     g = [x for x in L if in_pocket(x) == True]
     for x in g:
         if b1_pos == x:
-            b1_pos = [100, 750]
+            b1_pos = [130, 750]
             b1_vel = [0, 0]
         if b2_pos == x:
-            print("Off table!")
-            b2_pos = [160, 750]
-            print("Where?")
+            b2_pos = [190, 750]
             b2_vel = [0, 0]
-            print("Here!")
         if b3_pos == x:
-            b3_pos = [220, 750]
+            b3_pos = [250, 750]
             b3_vel = [0, 0]
         if b4_pos == x:
-            b4_pos = [280, 750]
+            b4_pos = [310, 750]
             b4_vel = [0, 0]
         if b5_pos == x:
-            b5_pos = [340, 750]
+            b5_pos = [370, 750]
             b5_vel = [0, 0]
         if b6_pos == x:
-            b6_pos = [400, 750]
+            b6_pos = [430, 750]
             b6_vel = [0, 0]
         if b7_pos == x:
-            b7_pos = [460, 750]
+            b7_pos = [490, 750]
             b7_vel = [0, 0]
         if b8_pos == x:
-            b8_pos = [520, 750]
+            b8_pos = [550, 750]
             b8_vel = [0, 0]
         if b9_pos == x:
-            b9_pos = [580, 750]
+            b9_pos = [610, 750]
             b9_vel = [0, 0]
         if b10_pos == x:
-            b10_pos = [640, 750]
+            b10_pos = [670, 750]
             b10_vel = [0, 0]
         if b11_pos == x:
-            b11_pos = [700, 750]
+            b11_pos = [730, 750]
             b11_vel = [0, 0]
         if b12_pos == x:
-            b12_pos = [760, 750]
+            b12_pos = [790, 750]
             b12_vel = [0, 0]
         if b13_pos == x:
-            b13_pos = [820, 750]
+            b13_pos = [850, 750]
             b13_vel = [0, 0]
         if b14_pos == x:
-            b14_pos = [880, 750]
+            b14_pos = [910, 750]
             b14_vel = [0, 0]
         if b15_pos == x:
-            b15_pos = [940, 750]
+            b15_pos = [970, 750]
             b15_vel = [0, 0]
 
 def timer(add_time):
