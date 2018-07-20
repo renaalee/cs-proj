@@ -523,6 +523,17 @@ def timer(add_time):
     output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [300, 50])
+
+    m = len(all_pockets())
+    if m == 0:
+        final_minutes = minutes
+        final_seconds = seconds
+
+        output_string = "Timer: {0:02}:{1:02}".format(final_minutes, final_seconds)
+        text = font.render(output_string, True, [0, 0, 0])
+        window.blit(text, [300, 50])
+        #pygame.time.wait(30000)
+        #make the timer freeze at the time it was at when it ended
     
     return add_time
     
