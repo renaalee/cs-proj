@@ -62,7 +62,7 @@ def draw_table():
 table_dims = [110, 110, 990, 690]
 ball_pos = [550, 400]
 ball_vel = [0,0]
-ball_radius = 10
+ball_radius = 12
 ball_color = pygame.Color(127,127,255)
 clock = pygame.time.Clock()
 
@@ -527,6 +527,16 @@ def stopballs():
         collsec = frame_count  // frame_rate
         #print('collsec')
     
+    elif totsec - collsec == 2:
+        for x in range(len(V)):
+            if V[x][0] > 0 and V[x][1] > 0:
+                V[x] = [V[x][0]-1,V[x][1]-1]
+            elif V[x][0] > 0 and V[x][1] < 0:
+                V[x] = [V[x][0]-1,V[x][1]+1]
+            elif V[x][0] < 0 and V[x][1] > 0:
+                V[x] = [V[x][0]+1,V[x][1]-1]
+            elif V[x][0] < 0 and V[x][1] < 0:
+                V[x] = [V[x][0]+1,V[x][1]+1]
     elif totsec - collsec == 3:
         for x in range(len(V)):
             V[x] = [0,0]
@@ -566,7 +576,7 @@ while True:
         #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
-    #stopballs()
+    stopballs()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
