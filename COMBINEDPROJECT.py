@@ -149,6 +149,26 @@ def move_control(ball_vel):
         ball_vel = brake_control(ball_vel)
     return ball_vel
 
+def auto_win(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o):
+    """Pressing the w key will automatically win the game; meant for testing. """
+    if event.key == pygame.K_w:
+        a = [130, 130]
+        b = [130, 130]
+        c = [130, 130]
+        d = [130, 130]
+        e = [130, 130]
+        f = [130, 670]
+        g = [130, 670]
+        h = [130, 670]
+        i = [130, 670]
+        j = [130, 670]
+        k = [970, 130]
+        l = [970, 130]
+        m = [970, 130]
+        n = [970, 130]
+        o = [970, 130]
+    return a, b, c, d, e, f, g, h, i, j, k, l, m, n, o
+
 
 def ball(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
@@ -589,6 +609,8 @@ while True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
     
 
     pygame.display.flip()
