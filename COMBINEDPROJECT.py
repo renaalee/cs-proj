@@ -194,18 +194,18 @@ def creating_balls():
     b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
     b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, rad) #4
     b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
-    #b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
-    #b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
-    #b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
-    #b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
-    #b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
-    #b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
-    #b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
-    #b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
-    #b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
-    #b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
+    b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
+    b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
+    b8 = ball(window, pygame.Color(153, 204, 255), b8_pos, rad) #8
+    b9 = ball(window, pygame.Color(153, 153, 255), b9_pos, rad) #9
+    b10 = ball(window, pygame.Color(204, 153, 255), b10_pos, rad) #10
+    b11 = ball(window, pygame.Color(255, 153, 255), b11_pos, rad) #11
+    b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
+    b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
+    b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
+    b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
     
-    return b1, b2, b3, b4, b5
+    return b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
 
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
@@ -222,7 +222,7 @@ def checking_collisions():
     takes no input, returns list of velocities of balls that have been involved in a collision"""
     
     C = []
-    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
+    L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 
     #bCount = 0
     for b in range(len(L)):
@@ -244,28 +244,36 @@ def checking_collisions():
 
 
 def bound_and_roll():
-    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel
-    P = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos]
-    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_pos, b6_vel, b7_pos, b7_vel, b8_pos, b8_vel, b9_pos, b9_vel, b10_pos, b10_vel, b11_pos, b11_vel, b12_pos, b12_vel, b13_pos, b13_vel, b14_pos, b14_vel, b15_pos, b15_vel
+    P = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel]
 
-    for x in range(5):
+    for x in range(len(P)):
         #print(type(P[0]))
         #print(type(table_dims[2]))
-        if P[x][0] + rad >= table_dims[2] or P[x][0] - rad <= table_dims[0]:
+        if P[x][0] + rad >= table_dims[2]: 
+            P[x] = [table_dims[2]-10, P[x][1]]
             V[x] = [-V[x][0], V[x][1]]
-        if P[x][1] + rad >= table_dims[3] or P[x][1] - rad <= table_dims[1]:
+        if P[x][0] - rad <= table_dims[0]:
+            P[x] = [table_dims[0]+10, P[x][1]]
+            V[x] = [-V[x][0], V[x][1]]
+        if P[x][1] + rad >= table_dims[3]:
+            P[x] = [P[x][0], table_dims[3]-10]
+            V[x] = [V[x][0], - V[x][1]]
+        if P[x][1] - rad <= table_dims[1]:
+            P[x] = [P[x][0], table_dims[1]+10]
             V[x] = [V[x][0], - V[x][1]]
     
-    for x in range(5):
+    for x in range(len(P)):
         P[x] = [P[x][0] + V[x][0], P[x][1] + V[x][1]]
 
-    b1_pos, b2_pos, b3_pos, b4_pos, b5_pos = P[0], P[1], P[2], P[3], P[4]
-    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
+    b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = P[0], P[1], P[2], P[3], P[4], P[5], P[6], P[7], P[8], P[9], P[10], P[11], P[12], P[13], P[14]
+    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
 
 
 
 def update_all():
-    global ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel
+    global ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel, b6_pos, b6_vel, b7_pos, b7_vel, b8_pos, b8_vel, b9_pos, b9_vel, b10_pos, b10_vel, b11_pos, b11_vel, b12_pos, b12_vel, b13_pos, b13_vel, b14_pos, b14_vel, b15_pos, b15_vel
 
     lst = checking_collisions()
     #print('collisions:', lst)
@@ -288,6 +296,26 @@ def update_all():
         elif x==5:
            # print(x, 'collided')
             b5_pos, b5_vel = rxn5(b5_pos, b5_vel)
+        elif x == 6:
+            b6_pos, b6_vel = rxn6(b6_pos, b6_vel)
+        elif x == 7:
+            b7_pos, b7_vel = rxn7(b7_pos, b7_vel)
+        elif x == 8:
+            b8_pos, b8_vel = rxn8(b8_pos, b8_vel)
+        elif x == 9:
+            b9_pos, b9_vel = rxn9(b9_pos, b9_vel)
+        elif x == 10:
+            b10_pos, b10_vel = rxn10(b10_pos, b10_vel)
+        elif x == 11:
+            b11_pos, b11_vel = rxn11(b11_pos, b11_vel)
+        elif x == 12:
+            b12_pos, b12_vel = rxn12(b12_pos, b12_vel)
+        elif x == 13:
+            b13_pos, b13_vel = rxn13(b13_pos, b13_vel)
+        elif x == 14:
+            b14_pos, b14_vel = rxn14(b14_pos, b14_vel)
+        elif x == 15:
+            b15_pos, b15_vel = rxn15(b15_pos, b15_vel)
 
     #print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
 
@@ -298,79 +326,79 @@ def stopc(ball_pos, ball_vel):
     return ball_pos, ball_vel
 
 def rxn1(b1_pos, b1_vel):
-    b1_vel = [b1_vel[0]+1, b1_vel[1]+1]
+    b1_vel = [1, 1]
     b1_pos = [b1_pos[0] + b1_vel[0], b1_pos[1] + b1_vel[1]]
     return b1_pos, b1_vel
 
 def rxn2(b2_pos, b2_vel):
-    b2_vel = [b2_vel[0]+2,b2_vel[1]+2]
+    b2_vel = [2, 2]
     b2_pos = [b2_pos[0] + b2_vel[0], b2_pos[1] + b2_vel[1]]
     return b2_pos, b2_vel
 
 def rxn3(b3_pos, b3_vel):
-    b3_vel = [b3_vel[0]+1, b3_vel[1]]
+    b3_vel = [1, -1]
     b3_pos = [b3_pos[0] + b3_vel[0], b3_pos[1] + b3_vel[1]]
     return b3_pos, b3_vel
 
 def rxn4(b4_pos, b4_vel):
-    b4_vel = [b4_vel[0]+2, b4_vel[1]]
+    b4_vel = [2, -2]
     b4_pos = [b4_pos[0] + b4_vel[0], b4_pos[1] + b4_vel[1]]
     return b4_pos, b4_vel
 
 def rxn5(b5_pos, b5_vel):
-    b5_vel = [b5_vel[0], b5_vel[1]+2]
+    b5_vel = [1, 2]
     b5_pos = [b5_pos[0] + b5_vel[0], b5_pos[1] + b5_vel[1]]
     return b5_pos, b5_vel
 
-#def rxn6(b6_pos, b6_vel):
-#    b6_vel = 
-#    b6_pos = 
-#    return b6_pos, b6_vel
+def rxn6(b6_pos, b6_vel):
+    b6_vel = [-1, -1]
+    b6_pos = [b6_pos[0] + b6_vel[0], b6_pos[1] + b6_vel[1]]
+    return b6_pos, b6_vel
 
-#def rxn7(b7_pos, b7_vel):
-#    b7_vel = 
-#    b7_pos = 
-#    return b7_pos, b7_vel
+def rxn7(b7_pos, b7_vel):
+    b7_vel = [-1, 1]
+    b7_pos = [b7_pos[0] + b7_vel[0], b7_pos[1] + b7_vel[1]]
+    return b7_pos, b7_vel
 
-#def rxn8(b8_pos, b8_vel):
-#    b8_vel = 
-#    b8_pos = 
-#    return b8_pos, b8_vel
+def rxn8(b8_pos, b8_vel):
+    b8_vel = [-2, -1]
+    b8_pos = [b8_pos[0] + b8_vel[0], b8_pos[1] + b8_vel[1]]
+    return b8_pos, b8_vel
 
-#def rxn9(b9_pos, b9_vel):
-#    b9_vel = 
-#    b9_pos = 
-#    return b9_pos, b9_vel
+def rxn9(b9_pos, b9_vel):
+    b9_vel = [2, -1]
+    b9_pos = [b9_pos[0] + b9_vel[0], b9_pos[1] + b9_vel[1]]
+    return b9_pos, b9_vel
     
-#def rxn10(b10_pos, b10_vel):
-#    b10_vel = 
-#    b10_pos = 
-#    return b10_pos, b10_vel
+def rxn10(b10_pos, b10_vel):
+    b10_vel = [1, -2]
+    b10_pos = [b10_pos[0] + b10_vel[0], b10_pos[1] + b10_vel[1]]
+    return b10_pos, b10_vel
 
-#def rxn11(b11_pos, b11_vel):
-#    b11_vel = 
-#    b11_pos = 
-#    return b11_pos, b11_vel
+def rxn11(b11_pos, b11_vel):
+    b11_vel = [-1, -2]
+    b11_pos = [b11_pos[0] + b11_vel[0], b11_pos[1] + b11_vel[1]]
+    return b11_pos, b11_vel
 
-#def rxn12(b12_pos, b12_vel):
-#    b12_vel = 
-#    b12_pos = 
-#    return b12_pos, b12_vel
+def rxn12(b12_pos, b12_vel):
+    b12_vel = [1, 3]
+    b12_pos = [b12_pos[0] + b12_vel[0], b12_pos[1] + b12_vel[1]]
+    return b12_pos, b12_vel
 
-#def rxn13(b13_pos, b13_vel):
-#    b13_vel = 
-#    b13_pos = 
-#    return b13_pos, b13_vel
+def rxn13(b13_pos, b13_vel):
+    b13_vel = [-2, 2]
+    b13_pos = [b13_pos[0] + b13_vel[0], b13_pos[1] + b13_vel[1]]
+    return b13_pos, b13_vel
 
-#def rxn14(b14_pos, b14_vel):
-#    b14_vel = 
-#    b14_pos = 
-#    return b14_pos, b14_vel
+def rxn14(b14_pos, b14_vel):
+    b14_vel = [3, 1]
+    b14_pos = [b14_pos[0] + b14_vel[0], b14_pos[1] + b14_vel[1]]
+    return b14_pos, b14_vel
 
-#def rxn15(b15_pos, b15_vel):
-#    b15_vel = 
-#    b15_pos = 
-#    return b15_pos, b15_vel
+def rxn15(b15_pos, b15_vel):
+    b15_vel = [1, -3]
+    b15_pos = [b15_pos[0] + b15_vel[0], b15_pos[1] + b15_vel[1]]
+    return b15_pos, b15_vel
 
 def in_pocket(a):
     """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
@@ -428,8 +456,8 @@ def score():
 
 collsec = 0
 def stopballs():
-    global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel
-    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, v13_vel, b14_vel, b15_vel
+    V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel]
     collcheck = checking_collisions()
     frame_count = pygame.time.get_ticks()
     frame_rate = 1000
@@ -442,7 +470,7 @@ def stopballs():
         for x in range(len(V)):
             V[x] = [0,0]
 
-    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
+    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, v13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
 
 add_time = 0        #Variable needs to exist outside of the while loop
 while True:
@@ -470,7 +498,7 @@ while True:
         #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
-    stopballs()
+    #stopballs()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
