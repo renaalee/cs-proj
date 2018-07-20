@@ -508,7 +508,7 @@ def off_table():
             b15_vel = [0, 0]
 
 def timer(add_time):
-    """Creates a timer that runs throughout the game. Should also add 30 seconds when the control ball is in a pocket. """
+    """Creates a timer that runs throughout the game. Should also add time when the control ball is in a pocket. """
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 30)
     frame_count = pygame.time.get_ticks()
@@ -527,6 +527,7 @@ def timer(add_time):
 
     m = len(all_pockets())
     if m == 0:
+        #make the timer freeze at the time it was at when all the balls were collected
         final_minutes = minutes
         final_seconds = seconds
 
