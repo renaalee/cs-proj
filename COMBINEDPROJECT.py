@@ -10,7 +10,7 @@ pygame.init()
 #Background code:
 window_size = [1100, 800]
 window_color = pygame.Color(255, 255, 255)
-table_color = pygame.Color(214, 244, 255)
+table_color = pygame.Color(232, 241, 255)
 wood_color = pygame.Color(150, 150, 150)
 pocket_color1 = pygame.Color(255, 0 ,0)
 pocket_color2 = pygame.Color(255, 255, 255)
@@ -192,7 +192,7 @@ def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
     b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, rad) #2
     b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
-    b4 = ball(window, pygame.Color(204, 255, 153), b4_pos, rad) #4
+    b4 = ball(window, pygame.Color(178, 255, 102), b4_pos, rad) #4
     b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
     b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
     b7 = ball(window, pygame.Color(153, 255, 255), b7_pos, rad) #7
@@ -203,7 +203,7 @@ def creating_balls():
     b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
     b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
     b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
-    b15 = ball(window, pygame.Color(204, 229, 255), b15_pos, rad) #15
+    b15 = ball(window, pygame.Color(178, 229, 255), b15_pos, rad) #15
     
     return b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
 
@@ -556,13 +556,24 @@ def stopballs():
     #print('updating')
     #update_all()
 
+def welcome():
+    font = pygame.font.Font(None, 30)
+    output_string = "Welcome to Pool! "
+    text = font.render(output_string, True, [0, 0, 0])
+    window.blit(text, [475, 400])
+
 
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-add_time = 0        #Variables that need to exist outside of the while loop
+add_time = 0        #Variables that need to exist outside of the while loop^
+
+
 while True:
+    
     window = pygame.display.set_mode(window_size)
     window.fill(window_color)
     table = draw_table()
+
+    #welcome()   
 
     clock.tick(60)
     add_time = timer(add_time)
