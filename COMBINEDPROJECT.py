@@ -219,7 +219,7 @@ def one_collision(a, b):
 
 def checking_collisions():
     """checks collisions between all objects
-    takes no input, returns list of velocities of balls that have been involved in a collision"""
+    takes no input, returns list of indices of balls that have been involved in a collision"""
     
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
@@ -566,7 +566,7 @@ while True:
         #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
-    #stopballs()
+    stopballs()
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
