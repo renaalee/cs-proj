@@ -462,6 +462,7 @@ collsec = 0
 def stopballs():
     global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel
     V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel]
+    
     collcheck = checking_collisions()
     
     frame_count = pygame.time.get_ticks()
@@ -470,13 +471,17 @@ def stopballs():
 
     if collcheck != []:
         collsec = frame_count  // frame_rate
+        #print('collsec')
     
-    elif totsec - collsec > 2:
+    elif totsec - collsec == 3:
         for x in range(len(V)):
             V[x] = [0,0]
 
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel = V[0], V[1], V[2], V[3], V[4]
-    update_all()
+    #print('all have stopped')
+    bound_and_roll()
+    #print('updating')
+    #update_all()
 
 
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
