@@ -149,6 +149,26 @@ def move_control(ball_vel):
         ball_vel = brake_control(ball_vel)
     return ball_vel
 
+def auto_win(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o):
+    """Pressing the w key will automatically win the game; meant for testing. """
+    if event.key == pygame.K_w:
+        a = [130, 130]
+        b = [130, 130]
+        c = [130, 130]
+        d = [130, 130]
+        e = [130, 130]
+        f = [130, 670]
+        g = [130, 670]
+        h = [130, 670]
+        i = [130, 670]
+        j = [130, 670]
+        k = [970, 130]
+        l = [970, 130]
+        m = [970, 130]
+        n = [970, 130]
+        o = [970, 130]
+    return a, b, c, d, e, f, g, h, i, j, k, l, m, n, o
+
 
 def ball(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
@@ -402,7 +422,7 @@ def all_pockets():
     for b in range(len(L)):
         if in_pocket(L[b]) == False:
             w += [b]
-    print(w)
+    #print(w)
     return w
 
 
@@ -413,8 +433,6 @@ def bound_and_roll():
 
     w = all_pockets()
     for x in w:
-        #print(type(P[0]))
-        #print(type(table_dims[2]))
         if P[x][0] + rad >= table_dims[2]: 
             P[x] = [table_dims[2]-10, P[x][1]]
             V[x] = [-V[x][0], V[x][1]]
@@ -444,52 +462,49 @@ def off_table():
     g = [x for x in L if in_pocket(x) == True]
     for x in g:
         if b1_pos == x:
-            b1_pos = [100, 750]
+            b1_pos = [130, 750]
             b1_vel = [0, 0]
         if b2_pos == x:
-            print("Off table!")
-            b2_pos = [160, 750]
-            print("Where?")
+            b2_pos = [190, 750]
             b2_vel = [0, 0]
-            print("Here!")
         if b3_pos == x:
-            b3_pos = [220, 750]
+            b3_pos = [250, 750]
             b3_vel = [0, 0]
         if b4_pos == x:
-            b4_pos = [280, 750]
+            b4_pos = [310, 750]
             b4_vel = [0, 0]
         if b5_pos == x:
-            b5_pos = [340, 750]
+            b5_pos = [370, 750]
             b5_vel = [0, 0]
         if b6_pos == x:
-            b6_pos = [400, 750]
+            b6_pos = [430, 750]
             b6_vel = [0, 0]
         if b7_pos == x:
-            b7_pos = [460, 750]
+            b7_pos = [490, 750]
             b7_vel = [0, 0]
         if b8_pos == x:
-            b8_pos = [520, 750]
+            b8_pos = [550, 750]
             b8_vel = [0, 0]
         if b9_pos == x:
-            b9_pos = [580, 750]
+            b9_pos = [610, 750]
             b9_vel = [0, 0]
         if b10_pos == x:
-            b10_pos = [640, 750]
+            b10_pos = [670, 750]
             b10_vel = [0, 0]
         if b11_pos == x:
-            b11_pos = [700, 750]
+            b11_pos = [730, 750]
             b11_vel = [0, 0]
         if b12_pos == x:
-            b12_pos = [760, 750]
+            b12_pos = [790, 750]
             b12_vel = [0, 0]
         if b13_pos == x:
-            b13_pos = [820, 750]
+            b13_pos = [850, 750]
             b13_vel = [0, 0]
         if b14_pos == x:
-            b14_pos = [880, 750]
+            b14_pos = [910, 750]
             b14_vel = [0, 0]
         if b15_pos == x:
-            b15_pos = [940, 750]
+            b15_pos = [970, 750]
             b15_vel = [0, 0]
 
 def timer(add_time):
@@ -509,6 +524,17 @@ def timer(add_time):
     output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [300, 50])
+
+    m = len(all_pockets())
+    if m == 0:
+        final_minutes = minutes
+        final_seconds = seconds
+
+        output_string = "Timer: {0:02}:{1:02}".format(final_minutes, final_seconds)
+        text = font.render(output_string, True, [0, 0, 0])
+        window.blit(text, [300, 50])
+        #pygame.time.wait(30000)
+        #make the timer freeze at the time it was at when it ended
     
     return add_time
     
@@ -579,8 +605,7 @@ while True:
     add_time = timer(add_time)
     score()
 
-    #ball_pos, ball_vel = 
-    update_control()#ball_pos, ball_vel, ball_radius)
+    update_control()
     control = draw_control(window, ball_color, ball_pos, ball_radius)
     
     creating_balls()
@@ -589,11 +614,6 @@ while True:
     all_pockets()
     off_table()
     
-    #one_collision(ball_pos, b1_pos)
-    #checking_collisions() 
-
-    #if one_collision(b5_pos, b4_pos)==True:
-        #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
 
     update_all() #checks for collisions and dictates reactions
     stopballs()
@@ -606,7 +626,9 @@ while True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
     
 
     pygame.display.flip()
-#changes again
+#changes again why
