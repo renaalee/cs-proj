@@ -570,7 +570,7 @@ while True:
     off_table()
     
     #one_collision(ball_pos, b1_pos)
-    #checking_collisions()
+    #checking_collisions() 
 
     #if one_collision(b5_pos, b4_pos)==True:
         #print('COLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISIONCOLLISION')
@@ -589,4 +589,4 @@ while True:
     
 
     pygame.display.flip()
-#changeeeEEee
+#changeeeEEeee
