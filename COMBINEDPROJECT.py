@@ -687,7 +687,7 @@ def generate_fireworks():
 
 def generate_list_fireworks():
     A = []
-    for x in range(30):
+    for x in range(15):
         a = generate_fireworks()
         A += [a]
     return A
