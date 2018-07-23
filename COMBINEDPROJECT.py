@@ -16,6 +16,8 @@ wood_color = pygame.Color(150, 150, 150)
 pocket_color1 = pygame.Color(255, 0 ,0)
 pocket_color2 = pygame.Color(255, 255, 255)
 
+# +++++++++++++++++++++++++++++ TABLE SETUP ++++++++++++++++++++++++++++++
+
 def draw_table():
    #Table
    pygame.draw.rect(window, table_color, [100, 100, 900, 600], 0) #draws the green of the table
@@ -100,6 +102,7 @@ def all_pockets():
     #print(w)
     return w
 
+# ++++++++++++++++++++++++++ CONTROL BALL STUFF ++++++++++++++++++++++++++++
 
 def update_control():#ball_pos, ball_vel, ball_radius):
     global ball_pos, ball_vel, ball_radius, table_dims
@@ -187,6 +190,8 @@ def move_control(ball_vel):
         ball_vel = brake_control(ball_vel)
     return ball_vel
 
+# ++++++++++++++++++++++ CHEAT FUNCTION +++++++++++++++++++++++++++
+
 def auto_win(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o):
     """Pressing the w key will automatically win the game; meant for testing. """
     if event.key == pygame.K_w:
@@ -207,6 +212,7 @@ def auto_win(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o):
         o = [970, 130]
     return a, b, c, d, e, f, g, h, i, j, k, l, m, n, o
 
+# ++++++++++++++++++++++++++ GAME BALLS ++++++++++++++++++++++++++
 
 def ball(surface, ball_color, ball_pos, ball_radius):
     pygame.draw.circle(surface, ball_color, ball_pos, ball_radius)
@@ -245,7 +251,6 @@ b15_vel = [0,0]
 
 rad = 10
 
-
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
     b2 = ball(window, pygame.Color(255, 195, 90), b2_pos, rad) #2
@@ -264,6 +269,8 @@ def creating_balls():
     b15 = ball(window, pygame.Color(178, 229, 255), b15_pos, rad) #15
     
     return b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
+
+# ++++++++++++++++++++++ COLLISIONS & REACTIONS +++++++++++++++++++++++++++
 
 def one_collision(a, b):
     """checks if there is a collision between two balls"""
@@ -299,8 +306,6 @@ def checking_collisions():
         #bCount += 1
 
     return C
-
-
 
 def update_all():
     global ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel, b6_pos, b6_vel, b7_pos, b7_vel, b8_pos, b8_vel, b9_pos, b9_vel, b10_pos, b10_vel, b11_pos, b11_vel, b12_pos, b12_vel, b13_pos, b13_vel, b14_pos, b14_vel, b15_pos, b15_vel
@@ -346,9 +351,6 @@ def update_all():
             b14_pos, b14_vel = rxn14(b14_pos, b14_vel)
         elif x == 15:
             b15_pos, b15_vel = rxn15(b15_pos, b15_vel)
-
-    #print(ball_pos, ball_vel, b1_pos, b1_vel, b2_pos, b2_vel, b3_pos, b3_vel, b4_pos, b4_vel, b5_pos, b5_vel)
-
 
 def stopc(ball_pos, ball_vel):
     ball_vel = [0,0]
@@ -430,8 +432,7 @@ def rxn15(b15_pos, b15_vel):
     b15_pos = [b15_pos[0] + b15_vel[0], b15_pos[1] + b15_vel[1]]
     return b15_pos, b15_vel
 
-
-
+# ++++++++++++++++++++++ BOUNCE OFF BOUNDARY ++++++++++++++++++++++++++++++
 
 def bound_and_roll():
     global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_pos, b6_vel, b7_pos, b7_vel, b8_pos, b8_vel, b9_pos, b9_vel, b10_pos, b10_vel, b11_pos, b11_vel, b12_pos, b12_vel, b13_pos, b13_vel, b14_pos, b14_vel, b15_pos, b15_vel
@@ -458,8 +459,6 @@ def bound_and_roll():
 
     b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = P[0], P[1], P[2], P[3], P[4], P[5], P[6], P[7], P[8], P[9], P[10], P[11], P[12], P[13], P[14]
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
-
-
 
 def off_table():
     """Takes the balls that have been scored and places them somewhere off the table. """
@@ -514,6 +513,8 @@ def off_table():
             b15_pos = [970, 750]
             b15_vel = [0, 0]
 
+# ++++++++++++++++++++++++++++ SCORING +++++++++++++++++++++++++++++++
+
 def timer(add_time, end_time):
     """Creates a timer that runs throughout the game. Should also add time when the control ball is in a pocket. """
     m = len(all_pockets())
@@ -545,7 +546,6 @@ def timer(add_time, end_time):
     
     return add_time, end_time
     
-
 def score():
     """Displays the number of balls left to get in the pockets. """
     font = pygame.font.Font(None, 30)
@@ -554,6 +554,7 @@ def score():
     text = font.render(output_string, True, [0, 0, 0])
     window.blit(text, [700, 50])
 
+# +++++++++++++++++++++++++++++ SLOW BALLS DOWN ++++++++++++++++++++++++++
 
 collsec = 0
 def stopballs():
@@ -584,14 +585,10 @@ def stopballs():
             V[x] = [0,0]
 
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, v13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
-    #print('all have stopped')
     bound_and_roll()
-    #print('updating')
-    #update_all()
 
+# +++++++++++++++++++++++++++ FIREWORK CODE ++++++++++++++++++++++++++++++
 
-
-#FIREWORK CODE
 class Pellet(object):
     """flying pellets from explosion"""
 
@@ -704,6 +701,7 @@ def cue_fireworks():
 
 #END FIREWORK CODE
 
+# +++++++++++++++++++++++++++++++++ INTRO SCREEN ++++++++++++++++++++++
 
 def text_objects(text, font):
     textSurface = font.render(text, True, [255,255,255])
@@ -742,13 +740,11 @@ def intro():
                 end_sec = frame_count // frame_rate
                 break
 
-
-
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 end_time = 0
 add_time = 0  
 
-#BEGIN WHILE LOOP AND MAIN FUNCTION:
+# +++++++++++++++++++++ BEGIN WHILE LOOP AND MAIN FUNCTION ++++++++++++++++++++++
 
 whileCount = 0
 while True:
