@@ -590,12 +590,6 @@ def stopballs():
     #print('updating')
     #update_all()
 
-def welcome():
-    font = pygame.font.Font(None, 30)
-    output_string = "{0: 16} \n {1: 21}".format("Welcome to pool.","Press SPACE to start!")
-    text = font.render(output_string, True, [0, 0, 0])
-    window.blit(text, [475, 400])
-
 
 
 #FIREWORK CODE
@@ -732,7 +726,7 @@ def intro():
         window.fill([255, 204, 229])
         bfont = pygame.font.Font(None, 100)
         lfont = pygame.font.Font(None, 40)
-        TextSurf, TextRect = text_objects('POOL! (kinda)', bfont)
+        TextSurf, TextRect = text_objects('POOL?!', bfont)
         TextSurf2, TextRect2 = text_objects('Use ARROW KEYS to control ball.', lfont)
         TextSurf3, TextRect3 = text_objects('SPACE shoots ball. B brakes.', lfont)
         TextSurf4, TextRect4 = text_objects('Press SPACE to begin!', lfont)
