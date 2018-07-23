@@ -66,6 +66,40 @@ ball_radius = 12
 ball_color = pygame.Color(127,127,255)
 clock = pygame.time.Clock()
 
+def in_pocket(a):
+    """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
+    if a[0] <= 140 and a[1] <= 140:
+        return True
+    elif a[0] <= 560 and a[0] >= 540 and a[1] <= 135:
+        return True
+    elif a[0] >= 960 and a[1] <= 140:
+        return True
+    elif a[0] <= 140 and a[1] >= 660:
+        return True
+    elif a[0] >= 540 and a[0] <= 560 and a[1] >= 665:
+        return True
+    elif a[0] >= 960 and a[1] >= 660:
+        return True
+    elif a[1] == 750:
+        return True
+    else:
+        return False
+
+def all_pockets():
+    """Takes a list of all the balls and checks to see if any are in a pocket.
+    If they are in a pocket, excluding the control ball, they are removed from the list. """
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
+    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    #b = [x for x in L if in_pocket(x) == False]
+
+    w = []
+    for b in range(len(L)):
+        if in_pocket(L[b]) == False:
+            w += [b]
+    #print(w)
+    return w
+
+
 def update_control():#ball_pos, ball_vel, ball_radius):
     global ball_pos, ball_vel, ball_radius, table_dims
 
@@ -74,7 +108,10 @@ def update_control():#ball_pos, ball_vel, ball_radius):
     if ball_pos[1] + ball_radius >= table_dims[3] or ball_pos[1] - ball_radius <= table_dims[1]:
         ball_vel = [ball_vel[0], -ball_vel[1]]
 
-    ball_pos = [ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1]]
+    if len(all_pockets()) == 0:
+        ball_pos = [ball_pos[0], ball_pos[1]]
+    if len(all_pockets()) != 0:
+        ball_pos = [ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1]]
 
     #return ball_pos, ball_vel
 
@@ -392,38 +429,7 @@ def rxn15(b15_pos, b15_vel):
     b15_pos = [b15_pos[0] + b15_vel[0], b15_pos[1] + b15_vel[1]]
     return b15_pos, b15_vel
 
-def in_pocket(a):
-    """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
-    if a[0] <= 140 and a[1] <= 140:
-        return True
-    elif a[0] <= 560 and a[0] >= 540 and a[1] <= 135:
-        return True
-    elif a[0] >= 960 and a[1] <= 140:
-        return True
-    elif a[0] <= 140 and a[1] >= 660:
-        return True
-    elif a[0] >= 540 and a[0] <= 560 and a[1] >= 665:
-        return True
-    elif a[0] >= 960 and a[1] >= 660:
-        return True
-    elif a[1] == 750:
-        return True
-    else:
-        return False
 
-def all_pockets():
-    """Takes a list of all the balls and checks to see if any are in a pocket.
-    If they are in a pocket, excluding the control ball, they are removed from the list. """
-    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
-    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-    #b = [x for x in L if in_pocket(x) == False]
-
-    w = []
-    for b in range(len(L)):
-        if in_pocket(L[b]) == False:
-            w += [b]
-    #print(w)
-    return w
 
 
 def bound_and_roll():
@@ -507,37 +513,44 @@ def off_table():
             b15_pos = [970, 750]
             b15_vel = [0, 0]
 
-def timer(add_time):
+def timer(add_time, end_time):
     """Creates a timer that runs throughout the game. Should also add time when the control ball is in a pocket. """
+    m = len(all_pockets())
+    frame_count = pygame.time.get_ticks()
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 30)
-    frame_count = pygame.time.get_ticks()
     frame_rate = 1000
-    total_seconds  = frame_count // frame_rate + add_time
+    if m != 0:
+        #Frame count
+        total_seconds  = frame_count // frame_rate + add_time
 
-    if in_pocket(ball_pos) == True:
-        add_time += 1
+        if in_pocket(ball_pos) == True:
+            add_time += 1
 
-    seconds = total_seconds % 60
-    minutes = total_seconds // 60
+        seconds = total_seconds % 60
+        minutes = total_seconds // 60
     
-    output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
-    text = font.render(output_string, True, [0, 0, 0])
-    window.blit(text, [300, 50])
+        output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
+        text = font.render(output_string, True, [0, 0, 0])
+        window.blit(text, [300, 50])
 
-    m = len(all_pockets())
-    if m == 0:
+        end_time += 1
+    
+    else:
+        #print("Should end")
         #make the timer freeze at the time it was at when all the balls were collected
-        final_minutes = minutes
-        final_seconds = seconds
-
+        #end_time = frame_count // frame_rate + add_time
+        #frame_count = 0
+        end_time += add_time
+        final_seconds = end_time % 60
+        final_minutes = end_time // 60
+        #print("Display?")
         output_string = "Timer: {0:02}:{1:02}".format(final_minutes, final_seconds)
         text = font.render(output_string, True, [0, 0, 0])
         window.blit(text, [300, 50])
-        #pygame.time.wait(30000)
-        #make the timer freeze at the time it was at when it ended
+        #print("Done?")
     
-    return add_time
+    return add_time, end_time
     
 
 def score():
@@ -585,6 +598,7 @@ def stopballs():
 
 
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+end_time = 0
 add_time = 0        #Variables that need to exist outside of the while loop
 while True:
     window = pygame.display.set_mode(window_size)
@@ -592,7 +606,7 @@ while True:
     table = draw_table()
 
     clock.tick(60)
-    add_time = timer(add_time)
+    add_time, end_time = timer(add_time, end_time)
     score()
 
     update_control()
@@ -609,16 +623,15 @@ while True:
     stopballs()
 
     for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            ball_vel = move_control(ball_vel)        
         if event.type == pygame.QUIT:
             pygame.quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                pygame.quit()
-        if event.type == pygame.KEYDOWN:
-            b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
+        if len(all_pockets()) != 0:
+            if event.type == pygame.KEYDOWN:
+                ball_vel = move_control(ball_vel)        
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
     
-
     pygame.display.flip()
-#changes again why
