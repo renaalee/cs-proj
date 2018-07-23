@@ -524,7 +524,7 @@ def timer(add_time, end_time):
     if m != 0:
         #Frame count
         #print(frame_count)
-        total_seconds  = frame_count // frame_rate + add_time
+        total_seconds  = frame_count // frame_rate + add_time - end_sec
 
         if in_pocket(ball_pos) == True:
             add_time += 1
@@ -707,21 +707,38 @@ def text_objects(text, font):
     textSurface = font.render(text, True, [255,255,255])
     return textSurface, textSurface.get_rect()
 
+beg_sec = 0
+end_sec = 0
 def intro():
+    global beg_sec, end_sec
     window = pygame.display.set_mode(window_size)
     while True:
+        frame_count = pygame.time.get_ticks()
+        frame_rate = 1000
+        beg_sec = frame_count // frame_rate
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
         window.fill([255, 204, 229])
-        tfont = pygame.font.Font(None, 50)
-        TextSurf, TextRect = text_objects('POOL! (kinda)', tfont)
-        TextRect.center = (550, 400)
+        bfont = pygame.font.Font(None, 100)
+        lfont = pygame.font.Font(None, 40)
+        TextSurf, TextRect = text_objects('POOL! (kinda)', bfont)
+        TextSurf2, TextRect2 = text_objects('Use ARROW KEYS to control ball.', lfont)
+        TextSurf3, TextRect3 = text_objects('SPACE shoots ball. B brakes.', lfont)
+        TextSurf4, TextRect4 = text_objects('Press SPACE to begin!', lfont)
+        TextRect.center = (550, 300)
+        TextRect2.center = (550, 400)
+        TextRect3.center = (550, 450)
+        TextRect4.center = (550, 550)
         window.blit(TextSurf, TextRect)
+        window.blit(TextSurf2, TextRect2)
+        window.blit(TextSurf3, TextRect3)
+        window.blit(TextSurf4, TextRect4)
         pygame.display.update()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
+                end_sec = frame_count // frame_rate
                 break
 
 
@@ -776,6 +793,3 @@ while True:
             b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
         
     pygame.display.flip()
-
-intro()
-gameloop()
