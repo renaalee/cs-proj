@@ -536,8 +536,6 @@ def timer(add_time, end_time):
         text = font.render(output_string, True, [0, 0, 0])
         window.blit(text, [300, 50])
 
-        #end_time += 1
-        #print(end_time)
         end_time = output_string
     
     else:
