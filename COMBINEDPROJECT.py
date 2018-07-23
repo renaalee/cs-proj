@@ -523,7 +523,6 @@ def timer(add_time, end_time):
     frame_rate = 1000
     if m != 0:
         #Frame count
-        #print(frame_count)
         total_seconds  = frame_count // frame_rate + add_time - end_sec
 
         if in_pocket(ball_pos) == True:
@@ -728,7 +727,6 @@ def intro():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                quit()
         window.fill([255, 204, 229])
         bfont = pygame.font.Font(None, 100)
         lfont = pygame.font.Font(None, 40)
@@ -794,7 +792,7 @@ while True:
             pygame.quit()
         if event.type == pygame.KEYDOWN:
             ball_vel = move_control(ball_vel)        
-        elif event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 pygame.quit()
         if event.type == pygame.KEYDOWN:
