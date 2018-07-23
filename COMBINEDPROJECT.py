@@ -4,6 +4,7 @@
 import pygame
 import math
 import time
+import random
 
 pygame.init()
 
@@ -66,6 +67,40 @@ ball_radius = 12
 ball_color = pygame.Color(127,127,255)
 clock = pygame.time.Clock()
 
+def in_pocket(a):
+    """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
+    if a[0] <= 140 and a[1] <= 140:
+        return True
+    elif a[0] <= 560 and a[0] >= 540 and a[1] <= 135:
+        return True
+    elif a[0] >= 960 and a[1] <= 140:
+        return True
+    elif a[0] <= 140 and a[1] >= 660:
+        return True
+    elif a[0] >= 540 and a[0] <= 560 and a[1] >= 665:
+        return True
+    elif a[0] >= 960 and a[1] >= 660:
+        return True
+    elif a[1] == 750:
+        return True
+    else:
+        return False
+
+def all_pockets():
+    """Takes a list of all the balls and checks to see if any are in a pocket.
+    If they are in a pocket, excluding the control ball, they are removed from the list. """
+    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
+    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+    #b = [x for x in L if in_pocket(x) == False]
+
+    w = []
+    for b in range(len(L)):
+        if in_pocket(L[b]) == False:
+            w += [b]
+    #print(w)
+    return w
+
+
 def update_control():#ball_pos, ball_vel, ball_radius):
     global ball_pos, ball_vel, ball_radius, table_dims
 
@@ -74,7 +109,10 @@ def update_control():#ball_pos, ball_vel, ball_radius):
     if ball_pos[1] + ball_radius >= table_dims[3] or ball_pos[1] - ball_radius <= table_dims[1]:
         ball_vel = [ball_vel[0], -ball_vel[1]]
 
-    ball_pos = [ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1]]
+    if len(all_pockets()) == 0:
+        ball_pos = [ball_pos[0], ball_pos[1]]
+    if len(all_pockets()) != 0:
+        ball_pos = [ball_pos[0] + ball_vel[0], ball_pos[1]+ball_vel[1]]
 
     #return ball_pos, ball_vel
 
@@ -392,38 +430,7 @@ def rxn15(b15_pos, b15_vel):
     b15_pos = [b15_pos[0] + b15_vel[0], b15_pos[1] + b15_vel[1]]
     return b15_pos, b15_vel
 
-def in_pocket(a):
-    """Checks if a ball is in any of the 6 pockets. Returns a boolean. """  
-    if a[0] <= 140 and a[1] <= 140:
-        return True
-    elif a[0] <= 560 and a[0] >= 540 and a[1] <= 135:
-        return True
-    elif a[0] >= 960 and a[1] <= 140:
-        return True
-    elif a[0] <= 140 and a[1] >= 660:
-        return True
-    elif a[0] >= 540 and a[0] <= 560 and a[1] >= 665:
-        return True
-    elif a[0] >= 960 and a[1] >= 660:
-        return True
-    elif a[1] == 750:
-        return True
-    else:
-        return False
 
-def all_pockets():
-    """Takes a list of all the balls and checks to see if any are in a pocket.
-    If they are in a pocket, excluding the control ball, they are removed from the list. """
-    global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
-    L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-    #b = [x for x in L if in_pocket(x) == False]
-
-    w = []
-    for b in range(len(L)):
-        if in_pocket(L[b]) == False:
-            w += [b]
-    #print(w)
-    return w
 
 
 def bound_and_roll():
@@ -507,36 +514,39 @@ def off_table():
             b15_pos = [970, 750]
             b15_vel = [0, 0]
 
-def timer(add_time):
-    """Creates a timer that runs throughout the game. Should also add 30 seconds when the control ball is in a pocket. """
+def timer(add_time, end_time):
+    """Creates a timer that runs throughout the game. Should also add time when the control ball is in a pocket. """
+    m = len(all_pockets())
+    frame_count = pygame.time.get_ticks()
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 30)
-    frame_count = pygame.time.get_ticks()
     frame_rate = 1000
-    total_seconds  = frame_count // frame_rate + add_time
+    if m != 0:
+        #Frame count
+        #print(frame_count)
+        total_seconds  = frame_count // frame_rate + add_time
 
-    if in_pocket(ball_pos) == True:
-        add_time += 1
+        if in_pocket(ball_pos) == True:
+            add_time += 1
 
-    seconds = total_seconds % 60
-    minutes = total_seconds // 60
+        seconds = total_seconds % 60
+        minutes = total_seconds // 60
     
-    output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
-    text = font.render(output_string, True, [0, 0, 0])
-    window.blit(text, [300, 50])
-
-    m = len(all_pockets())
-    if m == 0:
-        final_minutes = minutes
-        final_seconds = seconds
-
-        output_string = "Timer: {0:02}:{1:02}".format(final_minutes, final_seconds)
+        output_string = "Timer: {0:02}:{1:02}".format(minutes, seconds)
         text = font.render(output_string, True, [0, 0, 0])
         window.blit(text, [300, 50])
-        #pygame.time.wait(30000)
-        #make the timer freeze at the time it was at when it ended
+
+        #end_time += 1
+        #print(end_time)
+        end_time = output_string
     
-    return add_time
+    else:
+        #make the timer freeze at the time it was at when all the balls were collected
+        #print("Display?")
+        text = font.render(end_time, True, [0, 0, 0])
+        window.blit(text, [300, 50])
+    
+    return add_time, end_time
     
 
 def score():
@@ -582,6 +592,119 @@ def stopballs():
     #print('updating')
     #update_all()
 
+def welcome():
+    font = pygame.font.Font(None, 30)
+    output_string = "{0: 16} \n {1: 21}".format("Welcome to pool.","Press SPACE to start!")
+    text = font.render(output_string, True, [0, 0, 0])
+    window.blit(text, [475, 400])
+
+
+
+#FIREWORK CODE
+class Pellet(object):
+    """flying pellets from explosion"""
+
+    def __init__(self, radius, xposx, yposy, xvelx, yvely, color):
+        self.radius = radius
+        self.xposx = xposx
+        self.yposy = yposy
+        self.xvelx = xvelx
+        self.yvely = yvely 
+        self.color = color
+    
+    def create_pellets(self):
+        """creates exploding pellets at point of height"""
+        pygame.draw.circle(window, self.color, [self.xposx, self.yposy], self.radius)
+
+    def move(self):
+        """guides motion"""
+        self.yposy = self.yposy + self.yvely
+        self.xposx = self.xposx + self.xvelx
+        #print('this is them all moving')
+
+    def explode(self):
+        self.create_pellets()
+        #print(self.xposx, self.yposy)
+        self.move()
+        #print(self.xposx, self.yposy)
+
+class Firework(object):
+
+    def __init__(self, radius, height, posx, posy, velx, vely, color, P):
+        self.radius = radius
+        self.height = height
+        self.posx = posx
+        self.posy = posy
+        self.velx = velx
+        self.vely = vely 
+        self.color = color
+        self.P = P
+
+
+    def create_base(self):
+        """creates base at bottom with positions x, and y"""
+        pygame.draw.circle(window, self.color, [self.posx, self.posy], self.radius)
+
+
+    def roll_and_stop(self):
+        """ rolls up and stops at given height"""
+        #global p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12
+        
+        if self.posy <= self.height:
+            #print('im at height')
+            self.velx = 0
+            self.vely = 0
+            X = self.posx
+            Y = self.posy
+
+            #print('this is', X,Y)
+            
+            if self.P == []:
+                D = [[2,0], [0,2], [-2,0], [0,-2], [1,2], [1,-2], [-1,2], [-1,-2], [2,1], [2,-1], [-2,1], [-2,-1]]
+                #print(P)
+                for p in range(12):
+                    self.P.append(Pellet(self.radius, X, Y, D[p][0], D[p][1],self.color))
+    
+            return explosion(self.P)
+            #explosion(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12) #why doesn't this work??? they form but don't move
+            #print('they have exploded')
+           
+        self.posy = self.posy - self.vely
+        self.posx = self.posx 
+        #print('roll pls')
+
+def explosion(P):
+    for p in P:
+        p.explode()
+
+
+def generate_fireworks():
+    rad = random.randint(1,8)
+    height = random.randint(100, 700)
+    posx = random.randint(100, 1000)
+    vely = random.randint(1,3)
+    color = random.choice([(255,153,153), (255,204,153), (255,255,153), (178,255,102), (153,255,204), (153,255,255), (153,204,255), (153,153,255), (204,153,255), (255,153,255), (255,204,229), (229,204,255), (178,229,255)])
+
+    d = Firework(rad, height, posx, 780, 0, vely, color, [])
+    return d
+
+def generate_list_fireworks():
+    A = []
+    for x in range(30):
+        a = generate_fireworks()
+        A += [a]
+    return A
+
+A = generate_list_fireworks()
+def cue_fireworks():
+    if len(all_pockets()) == 0:
+        for d in A:
+            d.create_base()
+            d.roll_and_stop()
+
+#END FIREWORK CODE
+
+
 def text_objects(text, font):
     textSurface = font.render(text, True, [255,255,255])
     return textSurface, textSurface.get_rect()
@@ -590,11 +713,10 @@ def intro():
     window = pygame.display.set_mode(window_size)
     while True:
         for event in pygame.event.get():
-            print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        window.fill([255, 204,229])
+        window.fill([255, 204, 229])
         tfont = pygame.font.Font(None, 50)
         TextSurf, TextRect = text_objects('POOL! (kinda)', tfont)
         TextRect.center = (550, 400)
@@ -602,51 +724,60 @@ def intro():
         pygame.display.update()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                gameloop()
+                break
 
-window = pygame.display.set_mode(window_size)
+
+
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-add_time = 0        #Variables that need to exist outside of the while loop^
+end_time = 0
+add_time = 0  
 
-def gameloop():
-    add_time = 0  
-    while True:
-        window.fill(window_color)
-        table = draw_table()
 
-        clock.tick(60)
-        add_time = timer(add_time)
-        score()
+whileCount = 0
+while True:
 
-        update_control()
-        control = draw_control(window, ball_color, ball_pos, ball_radius)
-        
-        creating_balls()
-        bound_and_roll()
+    if whileCount == 0:
+        intro()
 
-        all_pockets()
-        off_table()
-        
+    window = pygame.display.set_mode(window_size)
+    window.fill(window_color)
+    table = draw_table()
 
-        update_all() #checks for collisions and dictates reactions
-        stopballs()
+            #welcome()   
 
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                ball_vel = move_control(ball_vel)        
-            if event.type == pygame.QUIT:
+    clock.tick(60)
+    add_time, end_time = timer(add_time, end_time)
+    score()
+
+    update_control()
+    control = draw_control(window, ball_color, ball_pos, ball_radius)
+            
+    creating_balls()
+    bound_and_roll()
+
+    all_pockets()
+    off_table()
+            
+
+    update_all() #checks for collisions and dictates reactions
+    stopballs()
+
+    cue_fireworks()
+
+    whileCount += 1
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            ball_vel = move_control(ball_vel)        
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
                 pygame.quit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    pygame.quit()
-            if event.type == pygame.KEYDOWN:
-                b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
+        if event.type == pygame.KEYDOWN:
+            b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
         
-
-        pygame.display.flip()
-    #changes again why
+    pygame.display.flip()
 
 intro()
 gameloop()
-pygame.quit()
-quit()
