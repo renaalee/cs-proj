@@ -522,6 +522,7 @@ def timer(add_time, end_time):
     frame_rate = 1000
     if m != 0:
         #Frame count
+        #print(frame_count)
         total_seconds  = frame_count // frame_rate + add_time
 
         if in_pocket(ball_pos) == True:
@@ -534,21 +535,15 @@ def timer(add_time, end_time):
         text = font.render(output_string, True, [0, 0, 0])
         window.blit(text, [300, 50])
 
-        end_time += 1
+        #end_time += 1
+        #print(end_time)
+        end_time = output_string
     
     else:
-        #print("Should end")
         #make the timer freeze at the time it was at when all the balls were collected
-        #end_time = frame_count // frame_rate + add_time
-        #frame_count = 0
-        end_time += add_time
-        final_seconds = end_time % 60
-        final_minutes = end_time // 60
         #print("Display?")
-        output_string = "Timer: {0:02}:{1:02}".format(final_minutes, final_seconds)
-        text = font.render(output_string, True, [0, 0, 0])
+        text = font.render(end_time, True, [0, 0, 0])
         window.blit(text, [300, 50])
-        #print("Done?")
     
     return add_time, end_time
     
@@ -605,7 +600,6 @@ def welcome():
 
 
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
-end_time = 0
 add_time = 0        #Variables that need to exist outside of the while loop
 while True:
     
@@ -635,13 +629,12 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-        if len(all_pockets()) != 0:
-            if event.type == pygame.KEYDOWN:
-                ball_vel = move_control(ball_vel)        
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    pygame.quit()
-            if event.type == pygame.KEYDOWN:
-                b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
+        if event.type == pygame.KEYDOWN:
+            ball_vel = move_control(ball_vel)        
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
     
     pygame.display.flip()
