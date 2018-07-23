@@ -726,7 +726,7 @@ def intro():
         window.fill([255, 204, 229])
         bfont = pygame.font.Font(None, 100)
         lfont = pygame.font.Font(None, 40)
-        TextSurf, TextRect = text_objects('POOL?!', bfont)
+        TextSurf, TextRect = text_objects('ABSURDIST POOL', bfont)
         TextSurf2, TextRect2 = text_objects('Use ARROW KEYS to control ball.', lfont)
         TextSurf3, TextRect3 = text_objects('SPACE shoots ball. B brakes.', lfont)
         TextSurf4, TextRect4 = text_objects('Press SPACE to begin!', lfont)
