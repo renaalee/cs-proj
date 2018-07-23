@@ -706,6 +706,7 @@ def cue_fireworks():
 
 
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
+end_time = 0
 add_time = 0        #Variables that need to exist outside of the while loop
 while True:
     
