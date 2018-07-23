@@ -11,7 +11,7 @@ pygame.init()
 #Background code:
 window_size = [1100, 800]
 window_color = pygame.Color(255, 255, 255)
-table_color = pygame.Color(232, 241, 255)
+table_color = pygame.Color(222, 231, 247)
 wood_color = pygame.Color(150, 150, 150)
 pocket_color1 = pygame.Color(255, 0 ,0)
 pocket_color2 = pygame.Color(255, 255, 255)
@@ -248,8 +248,8 @@ rad = 10
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
-    b2 = ball(window, pygame.Color(255, 204, 153), b2_pos, rad) #2
-    b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
+    b2 = ball(window, pygame.Color(255, 195, 90), b2_pos, rad) #2
+    b3 = ball(window, pygame.Color(255, 255, 0), b3_pos, rad) #2
     b4 = ball(window, pygame.Color(178, 255, 102), b4_pos, rad) #4
     b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
     b6 = ball(window, pygame.Color(153, 255, 204), b6_pos, rad) #6
