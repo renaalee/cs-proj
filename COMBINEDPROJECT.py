@@ -705,16 +705,45 @@ def cue_fireworks():
 #END FIREWORK CODE
 
 
+def text_objects(text, font):
+    textSurface = font.render(text, True, [255,255,255])
+    return textSurface, textSurface.get_rect()
+
+def intro():
+    window = pygame.display.set_mode(window_size)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        window.fill([255, 204, 229])
+        tfont = pygame.font.Font(None, 50)
+        TextSurf, TextRect = text_objects('POOL! (kinda)', tfont)
+        TextRect.center = (550, 400)
+        window.blit(TextSurf, TextRect)
+        pygame.display.update()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                break
+
+
+
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 end_time = 0
-add_time = 0        #Variables that need to exist outside of the while loop
+add_time = 0  
+
+
+whileCount = 0
 while True:
-    
+
+    if whileCount == 0:
+        intro()
+
     window = pygame.display.set_mode(window_size)
     window.fill(window_color)
     table = draw_table()
 
-    #welcome()   
+            #welcome()   
 
     clock.tick(60)
     add_time, end_time = timer(add_time, end_time)
@@ -722,19 +751,20 @@ while True:
 
     update_control()
     control = draw_control(window, ball_color, ball_pos, ball_radius)
-    
+            
     creating_balls()
     bound_and_roll()
 
     all_pockets()
     off_table()
-    
+            
 
     update_all() #checks for collisions and dictates reactions
     stopballs()
 
     cue_fireworks()
 
+    whileCount += 1
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -746,5 +776,8 @@ while True:
                 pygame.quit()
         if event.type == pygame.KEYDOWN:
             b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
-    
+        
     pygame.display.flip()
+
+intro()
+gameloop()
