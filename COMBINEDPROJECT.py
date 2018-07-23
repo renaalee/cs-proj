@@ -582,52 +582,71 @@ def stopballs():
     #print('updating')
     #update_all()
 
-def welcome():
-    font = pygame.font.Font(None, 30)
-    output_string = "{0: 16} \n {1: 21}".format("Welcome to pool.","Press SPACE to start!")
-    text = font.render(output_string, True, [0, 0, 0])
-    window.blit(text, [475, 400])
+def text_objects(text, font):
+    textSurface = font.render(text, True, [255,255,255])
+    return textSurface, textSurface.get_rect()
 
+def intro():
+    window = pygame.display.set_mode(window_size)
+    while True:
+        for event in pygame.event.get():
+            print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        window.fill([255, 204,229])
+        tfont = pygame.font.Font(None, 50)
+        TextSurf, TextRect = text_objects('POOL! (kinda)', tfont)
+        TextRect.center = (550, 400)
+        window.blit(TextSurf, TextRect)
+        pygame.display.update()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                gameloop()
 
-
+window = pygame.display.set_mode(window_size)
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 add_time = 0        #Variables that need to exist outside of the while loop^
-while True:
-    
-    window = pygame.display.set_mode(window_size)
-    window.fill(window_color)
-    table = draw_table()
 
-    #welcome()   
+def gameloop():
+    add_time = 0  
+    while True:
+        window.fill(window_color)
+        table = draw_table()
 
-    clock.tick(60)
-    add_time = timer(add_time)
-    score()
+        clock.tick(60)
+        add_time = timer(add_time)
+        score()
 
-    update_control()
-    control = draw_control(window, ball_color, ball_pos, ball_radius)
-    
-    creating_balls()
-    bound_and_roll()
+        update_control()
+        control = draw_control(window, ball_color, ball_pos, ball_radius)
+        
+        creating_balls()
+        bound_and_roll()
 
-    all_pockets()
-    off_table()
-    
+        all_pockets()
+        off_table()
+        
 
-    update_all() #checks for collisions and dictates reactions
-    stopballs()
+        update_all() #checks for collisions and dictates reactions
+        stopballs()
 
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            ball_vel = move_control(ball_vel)        
-        if event.type == pygame.QUIT:
-            pygame.quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                ball_vel = move_control(ball_vel)        
+            if event.type == pygame.QUIT:
                 pygame.quit()
-        if event.type == pygame.KEYDOWN:
-            b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
-    
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
+        
 
-    pygame.display.flip()
-#changes again why
+        pygame.display.flip()
+    #changes again why
+
+intro()
+gameloop()
+pygame.quit()
+quit()
