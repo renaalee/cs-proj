@@ -4,6 +4,7 @@
 import pygame
 import math
 import time
+import random
 
 pygame.init()
 
@@ -604,6 +605,111 @@ def welcome():
 
 
 
+#FIREWORK CODE
+class Pellet(object):
+    """flying pellets from explosion"""
+
+    def __init__(self, radius, xposx, yposy, xvelx, yvely, color):
+        self.radius = radius
+        self.xposx = xposx
+        self.yposy = yposy
+        self.xvelx = xvelx
+        self.yvely = yvely 
+        self.color = color
+    
+    def create_pellets(self):
+        """creates exploding pellets at point of height"""
+        pygame.draw.circle(window, self.color, [self.xposx, self.yposy], self.radius)
+
+    def move(self):
+        """guides motion"""
+        self.yposy = self.yposy + self.yvely
+        self.xposx = self.xposx + self.xvelx
+        #print('this is them all moving')
+
+    def explode(self):
+        self.create_pellets()
+        #print(self.xposx, self.yposy)
+        self.move()
+        #print(self.xposx, self.yposy)
+
+class Firework(object):
+
+    def __init__(self, radius, height, posx, posy, velx, vely, color, P):
+        self.radius = radius
+        self.height = height
+        self.posx = posx
+        self.posy = posy
+        self.velx = velx
+        self.vely = vely 
+        self.color = color
+        self.P = P
+
+
+    def create_base(self):
+        """creates base at bottom with positions x, and y"""
+        pygame.draw.circle(window, self.color, [self.posx, self.posy], self.radius)
+
+
+    def roll_and_stop(self):
+        """ rolls up and stops at given height"""
+        #global p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12
+        
+        if self.posy <= self.height:
+            #print('im at height')
+            self.velx = 0
+            self.vely = 0
+            X = self.posx
+            Y = self.posy
+
+            #print('this is', X,Y)
+            
+            if self.P == []:
+                D = [[2,0], [0,2], [-2,0], [0,-2], [1,2], [1,-2], [-1,2], [-1,-2], [2,1], [2,-1], [-2,1], [-2,-1]]
+                #print(P)
+                for p in range(12):
+                    self.P.append(Pellet(self.radius, X, Y, D[p][0], D[p][1],self.color))
+    
+            return explosion(self.P)
+            #explosion(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12) #why doesn't this work??? they form but don't move
+            #print('they have exploded')
+           
+        self.posy = self.posy - self.vely
+        self.posx = self.posx 
+        #print('roll pls')
+
+def explosion(P):
+    for p in P:
+        p.explode()
+
+
+def generate_fireworks():
+    rad = random.randint(1,8)
+    height = random.randint(100, 700)
+    posx = random.randint(100, 1000)
+    vely = random.randint(1,3)
+    color = random.choice([(255,153,153), (255,204,153), (255,255,153), (178,255,102), (153,255,204), (153,255,255), (153,204,255), (153,153,255), (204,153,255), (255,153,255), (255,204,229), (229,204,255), (178,229,255)])
+
+    d = Firework(rad, height, posx, 780, 0, vely, color, [])
+    return d
+
+def generate_list_fireworks():
+    A = []
+    for x in range(30):
+        a = generate_fireworks()
+        A += [a]
+    return A
+
+A = generate_list_fireworks()
+def cue_fireworks():
+    if len(all_pockets()) == 0:
+        for d in A:
+            d.create_base()
+            d.roll_and_stop()
+
+#END FIREWORK CODE
+
+
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 end_time = 0
 add_time = 0        #Variables that need to exist outside of the while loop
@@ -631,6 +737,9 @@ while True:
 
     update_all() #checks for collisions and dictates reactions
     stopballs()
+
+    cue_fireworks()
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
