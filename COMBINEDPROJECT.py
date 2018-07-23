@@ -695,9 +695,18 @@ def generate_list_fireworks():
         A += [a]
     return A
 
+def text_conclusion(text, font):
+    textSurface = font.render(text, True, [244, 66,104])
+    return textSurface, textSurface.get_rect()
+
 A = generate_list_fireworks()
 def cue_fireworks():
     if len(all_pockets()) == 0:
+        tfont = pygame.font.Font(None, 50)
+        TextSurf, TextRect = text_conclusion('YOU WIN!', tfont)
+        TextRect.center = (550, 400)
+        window.blit(TextSurf, TextRect)
+        
         for d in A:
             d.create_base()
             d.roll_and_stop()
@@ -741,11 +750,9 @@ while True:
 
     window = pygame.display.set_mode(window_size)
     window.fill(window_color)
-    table = draw_table()
+    table = draw_table()  
 
-            #welcome()   
-
-    clock.tick(60)
+    clock.tick(60)    #sets frame rate for speed control
     add_time, end_time = timer(add_time, end_time)
     score()
 
@@ -779,5 +786,3 @@ while True:
         
     pygame.display.flip()
 
-intro()
-gameloop()
