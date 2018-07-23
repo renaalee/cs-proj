@@ -536,8 +536,6 @@ def timer(add_time, end_time):
         text = font.render(output_string, True, [0, 0, 0])
         window.blit(text, [300, 50])
 
-        #end_time += 1
-        #print(end_time)
         end_time = output_string
     
     else:
@@ -704,6 +702,9 @@ def cue_fireworks():
 
 #END FIREWORK CODE
 
+
+
+#BEGIN WHILE LOOP AND MAIN FUNCTION:
 
 L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 end_time = 0
