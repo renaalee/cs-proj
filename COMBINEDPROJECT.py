@@ -440,8 +440,8 @@ def bound_and_roll():
 
     w = all_pockets()
     for x in w:
-        if P[x][0] + rad >= table_dims[2]-5: 
-            P[x] = [table_dims[2]-15, P[x][1]]
+        if P[x][0] + rad >= table_dims[2]: 
+            P[x] = [table_dims[2]-10, P[x][1]]
             V[x] = [-V[x][0], V[x][1]]
         if P[x][0] - rad <= table_dims[0]:
             P[x] = [table_dims[0]+10, P[x][1]]
