@@ -248,7 +248,7 @@ rad = 10
 
 def creating_balls():
     b1 = ball(window, pygame.Color(255, 153, 153), b1_pos, rad) #1
-    b2 = ball(window, pygame.Color(255, 153, 153), b2_pos, rad) #2
+    b2 = ball(window, pygame.Color(255, 204, 153), b2_pos, rad) #2
     b3 = ball(window, pygame.Color(255, 255, 153), b3_pos, rad) #2
     b4 = ball(window, pygame.Color(178, 255, 102), b4_pos, rad) #4
     b5 = ball(window, pygame.Color(153, 255, 153), b5_pos, rad) #5
