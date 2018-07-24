@@ -795,6 +795,10 @@ def play_again():
         b15_pos = [720, 400]
         ball_pos = [550, 400]
         ball_vel = [0,0]
+
+        for d in range(len(A)):
+            A[d] = generate_fireworks()
+
         #print(b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel)
         return main()
 
