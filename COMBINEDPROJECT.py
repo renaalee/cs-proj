@@ -801,7 +801,7 @@ def play_again():
             A[d] = generate_fireworks()
 
         #print(b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel)
-        return main()
+        main()
 
 
 
