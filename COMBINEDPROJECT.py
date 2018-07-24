@@ -582,6 +582,16 @@ def stopballs():
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
     bound_and_roll()
 
+def play_again():
+    """Asks the user if they want to play again. """
+    #user = input("Play again? [y/n]")
+    font = pygame.font.Font(None, 30)
+    text = font.render('Play again?', True, [244, 66, 104])
+    text2 = font.render('R to restart, Q to quit.', True, [244, 66, 104])
+    window.blit(text, [490, 500])
+    window.blit(text2, [450, 530])
+
+
 # +++++++++++++++++++++++++++ FIREWORK CODE ++++++++++++++++++++++++++++++
 
 class Pellet(object):
@@ -689,6 +699,7 @@ def cue_fireworks():
         TextSurf, TextRect = text_conclusion('YOU WIN!', tfont)
         TextRect.center = (550, 400)
         window.blit(TextSurf, TextRect)
+        play_again()
         
         for d in A:
             d.create_base()
