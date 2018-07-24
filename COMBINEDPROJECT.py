@@ -289,22 +289,16 @@ def checking_collisions():
     C = []
     L = [ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
 
-    #bCount = 0
     for b in range(len(L)):
-        #indexCount = 1
         for r in range(len(L)):
             if b == r:
                 continue
             #print(b, ' , ', r)
             check = one_collision(L[b], L[r])
-
             #print(check)
             if check == True:
                 C += [b] + [r]
                 #print(C)
-            #indexCount += 1           
-        #bCount += 1
-
     return C
 
 def update_all():
@@ -328,7 +322,7 @@ def update_all():
         elif x ==4:
             #print(x, 'collided')
             b4_pos, b4_vel = rxn4(b4_pos, b4_vel)
-        elif x==5:
+        elif x==5:               
            # print(x, 'collided')
             b5_pos, b5_vel = rxn5(b5_pos, b5_vel)
         elif x == 6:
@@ -456,6 +450,7 @@ def bound_and_roll():
     
     for x in range(len(P)):
         P[x] = [P[x][0] + V[x][0], P[x][1] + V[x][1]]
+        #print(V[x][0], V[x][1])
 
     b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = P[0], P[1], P[2], P[3], P[4], P[5], P[6], P[7], P[8], P[9], P[10], P[11], P[12], P[13], P[14]
     b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
@@ -558,7 +553,7 @@ def score():
 
 collsec = 0
 def stopballs():
-    global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, v13_vel, b14_vel, b15_vel
+    global collsec, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel
     V = [b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel]
     collcheck = checking_collisions()
     
@@ -584,7 +579,7 @@ def stopballs():
         for x in range(len(V)):
             V[x] = [0,0]
 
-    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, v13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
+    b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel = V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7], V[8], V[9], V[10], V[11], V[12], V[13], V[14]
     bound_and_roll()
 
 # +++++++++++++++++++++++++++ FIREWORK CODE ++++++++++++++++++++++++++++++
@@ -744,48 +739,110 @@ L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10
 end_time = 0
 add_time = 0  
 
+
+def play_again():
+    global ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
+    global ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel
+    global collsec
+    if event.key == pygame.K_r:
+        whileCount = 0
+        collsec = 0
+        totsec = 0
+        beg_sec = 0
+        end_sec = 0 
+        end_time = 0
+        add_time = 0
+        b1_vel = [0,0]
+        b2_vel = [0,0]
+        b3_vel = [0,0]
+        b4_vel = [0,0]
+        b5_vel = [0,0]
+        b6_vel = [0,0]
+        b7_vel = [0,0]
+        b8_vel = [0,0]
+        b9_vel = [0,0]
+        b10_vel = [0,0]
+        b11_vel = [0,0]
+        b12_vel = [0,0]
+        b13_vel = [0,0]
+        b14_vel = [0,0]
+        b15_vel = [0,0]
+        b1_pos = [800, 350]
+        b2_pos = [800, 375]
+        b3_pos = [800, 400]
+        b4_pos = [800, 425]
+        b5_pos = [800, 450]
+        b6_pos = [780, 437]
+        b7_pos = [780, 412]
+        b8_pos = [780, 387]
+        b9_pos = [780, 362]
+        b10_pos = [760, 375]
+        b11_pos = [760, 400]
+        b12_pos = [760, 425]
+        b13_pos = [740, 412]
+        b14_pos = [740, 387]
+        b15_pos = [720, 400]
+        ball_pos = [550, 400]
+        ball_vel = [0,0]
+        #print(b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel)
+        return main()
+
+
+
+
+
 # +++++++++++++++++++++ BEGIN WHILE LOOP AND MAIN FUNCTION ++++++++++++++++++++++
 
-whileCount = 0
-while True:
 
-    if whileCount == 0:
-        intro()
+def main():
+    global window, window_color, window_size, ball_color, ball_radius, ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
+    global ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel
+    global add_time, end_time, control, event
+    whileCount = 0
+    while True:
 
-    window = pygame.display.set_mode(window_size)
-    window.fill(window_color)
-    table = draw_table()  
+        if whileCount == 0:
+            intro()
 
-    clock.tick(60)    #sets frame rate for speed control
-    add_time, end_time = timer(add_time, end_time)
-    score()
+        window = pygame.display.set_mode(window_size)
+        window.fill(window_color)
+        table = draw_table()  
 
-    update_control()
-    control = draw_control(window, ball_color, ball_pos, ball_radius)
-            
-    creating_balls()
-    bound_and_roll()
+        clock.tick(60)    #sets frame rate for speed control
+        add_time, end_time = timer(add_time, end_time)
+        score()
 
-    all_pockets()
-    off_table()
-            
+        update_control()
+        control = draw_control(window, ball_color, ball_pos, ball_radius)
+                
+        creating_balls()
+        bound_and_roll()
 
-    update_all() #checks for collisions and dictates reactions
-    stopballs()
+        all_pockets()
+        off_table()
+                
 
-    cue_fireworks()
+        update_all() #checks for collisions and dictates reactions
+        stopballs()
 
-    whileCount += 1
+        cue_fireworks()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-        if event.type == pygame.KEYDOWN:
-            ball_vel = move_control(ball_vel)        
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
+        whileCount += 1
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 pygame.quit()
-        if event.type == pygame.KEYDOWN:
-            b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
-        
-    pygame.display.flip()
+            if event.type == pygame.KEYDOWN:
+                ball_vel = move_control(ball_vel)        
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos = auto_win(b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos)
+            if event.type == pygame.KEYDOWN:
+                play_again()
+        pygame.display.flip()
+
+
+
+main()
