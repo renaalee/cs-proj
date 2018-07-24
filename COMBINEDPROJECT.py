@@ -592,7 +592,7 @@ def play_again():
     #user = input("Play again? [y/n]")
     font = pygame.font.Font(None, 30)
     text = font.render('Play again?', True, [244, 66, 104])
-    text2 = font.render('Y to restart, Q to quit.', True, [244, 66, 104])
+    text2 = font.render('R to restart, Q to quit.', True, [244, 66, 104])
     window.blit(text, [490, 500])
     window.blit(text2, [450, 530])
 
