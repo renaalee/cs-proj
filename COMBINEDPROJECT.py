@@ -754,7 +754,7 @@ add_time = 0
 def play_again():
     global ball_pos, b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
     global ball_vel, b1_vel, b2_vel, b3_vel, b4_vel, b5_vel, b6_vel, b7_vel, b8_vel, b9_vel, b10_vel, b11_vel, b12_vel, b13_vel, b14_vel, b15_vel
-    global collsec
+    global collsec, add_time
     if event.key == pygame.K_r:
         clock = pygame.time.Clock()
         whileCount = 0
