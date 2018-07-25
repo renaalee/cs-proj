@@ -90,7 +90,8 @@ def in_pocket(a):
 
 def all_pockets():
     """Takes a list of all the balls and checks to see if any are in a pocket.
-    If they are in a pocket, excluding the control ball, they are removed from the list. """
+    If they are in a pocket, excluding the control ball, they are removed from the list. 
+    Returns a list of all the balls left on the table. """
     global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     #b = [x for x in L if in_pocket(x) == False]
