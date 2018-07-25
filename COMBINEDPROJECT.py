@@ -90,7 +90,8 @@ def in_pocket(a):
 
 def all_pockets():
     """Takes a list of all the balls and checks to see if any are in a pocket.
-    If they are in a pocket, excluding the control ball, they are removed from the list. """
+    If they are in a pocket, excluding the control ball, they are removed from the list. 
+    Returns a list of all the balls left on the table. """
     global b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos
     L = [b1_pos, b2_pos, b3_pos, b4_pos, b5_pos, b6_pos, b7_pos, b8_pos, b9_pos, b10_pos, b11_pos, b12_pos, b13_pos, b14_pos, b15_pos]
     #b = [x for x in L if in_pocket(x) == False]
@@ -267,7 +268,7 @@ def creating_balls():
     b12 = ball(window, pygame.Color(255, 153, 204), b12_pos, rad) #12
     b13 = ball(window, pygame.Color(255, 204, 229), b13_pos, rad) #13
     b14 = ball(window, pygame.Color(229, 204, 255), b14_pos, rad) #14
-    b15 = ball(window, pygame.Color(178, 229, 255), b15_pos, rad) #15
+    b15 = ball(window, pygame.Color(204, 204, 255), b15_pos, rad) #15,  (178, 229, 255)
     
     return b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15
 
