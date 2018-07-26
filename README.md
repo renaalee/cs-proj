@@ -10,4 +10,5 @@ The arrow keys guide the control ball, the space bar shoots the control ball, an
 Guiding the control ball into a target results in a penalty of extra time added to the timer.
 
 Q allows one to quit the game.
+R restarts.
 W is an automatic-win cheat.
